@@ -125,7 +125,7 @@ jobs:
       - name: Rsync app files
         run: |
           APP_PATH="${CONTROL_PLANE_PATH:-/var/www/mcv.network/current/apps/control-plane}"
-          rsync -az --delete \
+          rsync -az --delete --no-owner --no-group \
             --exclude='.env' \
             --exclude='vendor/' \
             --exclude='node_modules/' \
@@ -150,6 +150,8 @@ jobs:
              php artisan key:generate --force --ansi && \
              php -r \"\\\$path='.env'; \\\$env=file_get_contents(\\\$path); \\\$env=preg_replace('/^APP_ENV=.*/m', 'APP_ENV=production', \\\$env); \\\$env=preg_replace('/^APP_DEBUG=.*/m', 'APP_DEBUG=false', \\\$env); \\\$env=preg_replace('/^APP_URL=.*/m', 'APP_URL=https://ads.mcv.network', \\\$env); file_put_contents(\\\$path, \\\$env);\" && \
              if grep -q '^DB_CONNECTION=sqlite' .env; then touch database/database.sqlite; fi && \
+             if [ \"\$(id -u)\" -eq 0 ]; then chown -R root:www-data . && chown -R www-data:www-data storage bootstrap/cache database; fi && \
+             chmod -R ug+rwX storage bootstrap/cache database && \
              php artisan migrate --force && \
              php artisan config:cache && \
              php artisan route:cache && \

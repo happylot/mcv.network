@@ -105,7 +105,7 @@ jobs:
         env:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '1786' }}
         run: |
-          rsync -az --delete \
+          rsync -az --delete --no-owner --no-group \
             -e "ssh -i ~/.ssh/deploy_key -p $DEPLOY_PORT -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no" \
             dist/ \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/"
