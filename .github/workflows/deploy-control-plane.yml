@@ -1,4 +1,5 @@
 name: Deploy Control Plane
+# VPS SSH runs on port 1786; DEPLOY_PORT can override the default.
 
 on:
   push:
