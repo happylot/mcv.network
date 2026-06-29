@@ -1,0 +1,119 @@
+name: 🚀 Build & Deploy MCV Network
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # ──────────────────────────────────────────
+  # JOB 1: Build & Validate
+  # ──────────────────────────────────────────
+  build:
+    name: 🔨 Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 🔨 Build static pages
+        run: node build.mjs
+
+      - name: 🔍 Validate output
+        run: |
+          echo "📄 Checking generated pages..."
+          PAGE_COUNT=$(find . -name "index.html" -not -path "./.github/*" -not -path "./mcv_website/*" | wc -l)
+          echo "   Found $PAGE_COUNT pages"
+          if [ "$PAGE_COUNT" -lt 40 ]; then
+            echo "❌ Expected 40+ pages, got $PAGE_COUNT"
+            exit 1
+          fi
+          echo "✅ Build validation passed"
+
+      - name: 📦 Upload build artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-build
+          path: |
+            index.html
+            assets/
+            advertisers/
+            commerce/
+            company/
+            legal/
+            login/
+            publishers/
+            resources/
+            signup/
+            solutions/
+            technology/
+            logo_MCV_network.png
+            sitemap.html
+          retention-days: 7
+
+  # ──────────────────────────────────────────
+  # JOB 2: Deploy to Production
+  # ──────────────────────────────────────────
+  deploy:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: https://mcv.network
+
+    steps:
+      - name: 📥 Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: website-build
+          path: ./dist
+
+      - name: 🔐 Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: 🗂️ Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            ./dist/ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/
+
+      - name: 🔄 Reload Nginx
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "sudo systemctl reload nginx"
+
+      - name: ✅ Health Check
+        run: |
+          sleep 5
+          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" http://${{ secrets.DEPLOY_HOST }}/health || echo "000")
+          if [ "$HTTP_STATUS" = "200" ]; then
+            echo "✅ Deploy successful! Site is live at https://mcv.network"
+          else
+            echo "⚠️ Health check: HTTP $HTTP_STATUS (DNS may not be propagated yet)"
+          fi
+
+      - name: 🧹 Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
