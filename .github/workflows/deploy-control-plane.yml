@@ -75,6 +75,7 @@ jobs:
 
     env:
       CONTROL_PLANE_PATH: ${{ secrets.CONTROL_PLANE_PATH }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '1786' }}
 
     steps:
       - name: Checkout
@@ -91,6 +92,7 @@ jobs:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ env.DEPLOY_PORT }}
         run: |
           set -euo pipefail
           missing=0
@@ -109,13 +111,13 @@ jobs:
             echo "::error title=Invalid DEPLOY_KEY::DEPLOY_KEY must be an unencrypted OpenSSH private key, including BEGIN/END lines."
             exit 1
           fi
-          ssh-keyscan -T 10 -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts || \
+          ssh-keyscan -T 10 -p "$DEPLOY_PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts || \
             echo "::warning title=SSH host key scan failed::Continuing with StrictHostKeyChecking disabled for deploy commands."
 
       - name: Create remote app directory
         run: |
           APP_PATH="${CONTROL_PLANE_PATH:-/var/www/mcv.network/current/apps/control-plane}"
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+          ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
             "mkdir -p '$APP_PATH'"
 
@@ -131,14 +133,14 @@ jobs:
             --exclude='storage/framework/sessions/' \
             --exclude='storage/framework/views/' \
             --exclude='database/database.sqlite' \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "ssh -i ~/.ssh/deploy_key -p $DEPLOY_PORT -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no" \
             apps/control-plane/ \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:$APP_PATH/"
 
       - name: Run remote Laravel deploy
         run: |
           APP_PATH="${CONTROL_PLANE_PATH:-/var/www/mcv.network/current/apps/control-plane}"
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+          ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
             "cd '$APP_PATH' && \
              mkdir -p storage/app storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
@@ -155,7 +157,7 @@ jobs:
 
       - name: Reload Nginx
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+          ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
             "sudo systemctl reload nginx"
 

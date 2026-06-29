@@ -78,6 +78,7 @@ jobs:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '1786' }}
         run: |
           set -euo pipefail
           missing=0
@@ -96,19 +97,23 @@ jobs:
             echo "::error title=Invalid DEPLOY_KEY::DEPLOY_KEY must be an unencrypted OpenSSH private key, including BEGIN/END lines."
             exit 1
           fi
-          ssh-keyscan -T 10 -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts || \
+          ssh-keyscan -T 10 -p "$DEPLOY_PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts || \
             echo "::warning title=SSH host key scan failed::Continuing with StrictHostKeyChecking disabled for deploy commands."
 
       - name: Deploy files
+        env:
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '1786' }}
         run: |
           rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "ssh -i ~/.ssh/deploy_key -p $DEPLOY_PORT -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no" \
             dist/ \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}/"
 
       - name: Reload Nginx
+        env:
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT || '1786' }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+          ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT" -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no \
             "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
             "sudo systemctl reload nginx"
 

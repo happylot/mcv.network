@@ -218,6 +218,7 @@ Thêm các secrets sau:
 | Secret Name | Value |
 |-------------|-------|
 | `DEPLOY_HOST` | `14.225.7.175` |
+| `DEPLOY_PORT` | `1786` |
 | `DEPLOY_USER` | `deploy` |
 | `DEPLOY_KEY` | Nội dung private key từ bước 2.8 |
 | `DEPLOY_PATH` | `/var/www/mcv.network/html` |
@@ -419,7 +420,7 @@ git push origin main
 ### SSH vào server kiểm tra
 
 ```bash
-ssh deploy@14.225.7.175
+ssh -p 1786 deploy@14.225.7.175
 ls -la /var/www/mcv.network/html/
 sudo nginx -t
 sudo systemctl status nginx
