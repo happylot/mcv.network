@@ -124,6 +124,10 @@ jobs:
             "cd '$APP_PATH' && \
              mkdir -p storage/app storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache && \
              composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader && \
+             if [ ! -f .env ]; then cp .env.example .env; fi && \
+             php artisan key:generate --force --ansi && \
+             php -r \"\\\$path='.env'; \\\$env=file_get_contents(\\\$path); \\\$env=preg_replace('/^APP_ENV=.*/m', 'APP_ENV=production', \\\$env); \\\$env=preg_replace('/^APP_DEBUG=.*/m', 'APP_DEBUG=false', \\\$env); \\\$env=preg_replace('/^APP_URL=.*/m', 'APP_URL=https://ads.mcv.network', \\\$env); file_put_contents(\\\$path, \\\$env);\" && \
+             if grep -q '^DB_CONNECTION=sqlite' .env; then touch database/database.sqlite; fi && \
              php artisan migrate --force && \
              php artisan config:cache && \
              php artisan route:cache && \
@@ -139,4 +143,4 @@ jobs:
       - name: Health check
         run: |
           sleep 5
-          curl -fsS https://ads.mcv.network/up
+          curl -kfsS https://ads.mcv.network/up
