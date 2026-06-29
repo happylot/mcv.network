@@ -74,11 +74,30 @@ jobs:
           path: dist
 
       - name: Setup SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
         run: |
+          set -euo pipefail
+          missing=0
+          for name in DEPLOY_KEY DEPLOY_HOST DEPLOY_USER; do
+            if [ -z "${!name}" ]; then
+              echo "::error title=Missing deploy secret::$name is not configured."
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ] || exit 1
+
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key >/dev/null 2>&1; then
+            echo "::error title=Invalid DEPLOY_KEY::DEPLOY_KEY must be an unencrypted OpenSSH private key, including BEGIN/END lines."
+            exit 1
+          fi
+          ssh-keyscan -T 10 -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts || \
+            echo "::warning title=SSH host key scan failed::Continuing with StrictHostKeyChecking disabled for deploy commands."
 
       - name: Deploy files
         run: |
