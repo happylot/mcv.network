@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitemap — MCV Network</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --mcv-navy: #204898;
+  --mcv-teal: #38C0B8;
+  --mcv-navy-dark: #0D1B2E;
+  --mcv-blue-light: #2D6BC4;
+  --mcv-teal-light: #6EE4DC;
+  --text-primary: #1A2B4A;
+  --text-secondary: #6B7C93;
+  --text-muted: #8993A4;
+  --bg-light: #F4F6F8;
+  --bg-white: #FFFFFF;
+  --border-light: #E8ECF0;
+  --gradient-primary: linear-gradient(135deg, #204898, #38C0B8);
+}
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); background: var(--bg-white); line-height: 1.6; }
+
+/* Header */
+.header {
+  background: var(--mcv-navy-dark);
+  padding: 48px 24px;
+  text-align: center;
+}
+.header h1 {
+  font-size: 32px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 8px;
+}
+.header h1 span { color: var(--mcv-teal); }
+.header p { font-size: 14px; color: rgba(255,255,255,0.6); }
+
+/* Container */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+/* Section */
+.sitemap-section {
+  margin-bottom: 40px;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+}
+.section-title i {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+}
+.section-title h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.section-title .badge {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+/* Page Links */
+.page-list {
+  list-style: none;
+  padding: 0;
+}
+.page-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 4px 0;
+  border-radius: 8px;
+  transition: all 0.15s;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+.page-item:hover {
+  background: var(--bg-light);
+}
+.page-item .url {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--mcv-navy);
+  min-width: 240px;
+  font-family: 'SF Mono', Consolas, monospace;
+}
+.page-item .desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+.page-item .priority {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.priority.high { background: #fee2e2; color: #dc2626; }
+.priority.medium { background: #fef3c7; color: #d97706; }
+.priority.low { background: #dcfce7; color: #16a34a; }
+.priority.phase4 { background: #e0e7ff; color: #4f46e5; }
+
+/* Subdomain Section */
+.subdomain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.subdomain-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+.subdomain-card:hover {
+  border-color: var(--mcv-teal);
+  box-shadow: 0 4px 12px rgba(56,192,184,0.1);
+}
+.subdomain-card .domain {
+  font-family: 'SF Mono', Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mcv-navy);
+  margin-bottom: 4px;
+}
+.subdomain-card .purpose {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Stats */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+  padding: 24px;
+  background: var(--bg-light);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+}
+.stat-item { text-align: center; }
+.stat-value { font-size: 28px; font-weight: 800; color: var(--mcv-navy); }
+.stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; }
+
+/* Nested children */
+.children {
+  margin-left: 32px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border-light);
+}
+.children .page-item {
+  padding: 8px 12px;
+}
+.children .page-item .url {
+  font-size: 13px;
+  min-width: 220px;
+}
+
+/* SEO / Tech */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 32px;
+}
+.info-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px;
+}
+.info-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mcv-navy);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card ul { list-style: none; padding: 0; }
+.info-card li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card li::before {
+  content: '•';
+  color: var(--mcv-teal);
+  font-weight: 700;
+}
+
+/* Footer */
+.sitemap-footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .page-item { flex-wrap: wrap; }
+  .page-item .url { min-width: unset; width: 100%; }
+  .info-grid { grid-template-columns: 1fr; }
+  .children { margin-left: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>MCV<span>.</span>Network — Sitemap</h1>
+  <p>Cấu trúc website hoàn chỉnh | mcv.network | Updated: June 2026</p>
+</div>
+
+<div class="container">
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value">52</div><div class="stat-label">Total Pages</div></div>
+  <div class="stat-item"><div class="stat-value">7</div><div class="stat-label">Main Sections</div></div>
+  <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">Subdomains</div></div>
+  <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Languages (Phase 3)</div></div>
+</div>
+
+<!-- SUBDOMAINS -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--gradient-primary);"><i class="fa-solid fa-globe"></i></i>
+    <h2>Domains & Subdomains</h2>
+  </div>
+  <div class="subdomain-grid">
+    <div class="subdomain-card">
+      <div class="domain">www.mcv.network</div>
+      <div class="purpose">Marketing website chính</div>
+    </div>
+    <div class="subdomain-card">
+      <div class="domain">ads.mcv.network</div>
+      <div class="purpose">Self-serve advertiser platform</div>
+    </div>
+    <div class="subdomain-card">
+      <div class="domain">docs.mcv.network</div>
+      <div class="purpose">Developer documentation</div>
+    </div>
+    <div class="subdomain-card">
+      <div class="domain">api.mcv.network</div>
+      <div class="purpose">API endpoints</div>
+    </div>
+    <div class="subdomain-card">
+      <div class="domain">cdn.mcv.network</div>
+      <div class="purpose">SDK & creative delivery</div>
+    </div>
+    <div class="subdomain-card">
+      <div class="domain">status.mcv.network</div>
+      <div class="purpose">System status page</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOMEPAGE -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-navy);"><i class="fa-solid fa-house"></i></i>
+    <h2>Homepage</h2>
+    <span class="badge">1 page</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/</span><span class="desc">Landing page — Hero, Stats, How It Works, Formats, Results, CTA</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/login</span><span class="desc">Đăng nhập advertiser/publisher</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/signup</span><span class="desc">Đăng ký tài khoản mới</span><span class="priority high">HIGH</span></li>
+  </ul>
+</div>
+
+<!-- ADVERTISERS -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-navy);"><i class="fa-solid fa-bullhorn"></i></i>
+    <h2>Advertisers</h2>
+    <span class="badge">7 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/advertisers</span><span class="desc">Overview — Tại sao chọn MCV Network</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/advertisers/platform</span><span class="desc">Giới thiệu Platform — features, dashboard, AI targeting</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/advertisers/formats</span><span class="desc">Ad formats & placements — interactive demos</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/advertisers/targeting</span><span class="desc">Targeting & audience solutions — contextual, lookalike, 1st party</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/advertisers/pricing</span><span class="desc">Pricing & packages — CPM/CPC/CPA rates</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/advertisers/case-studies</span><span class="desc">Câu chuyện thành công — ROI, testimonials</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/advertisers/get-started</span><span class="desc">Đăng ký & onboarding wizard</span><span class="priority high">HIGH</span></li>
+  </ul>
+</div>
+
+<!-- PUBLISHERS -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: #6b7c93;"><i class="fa-solid fa-newspaper"></i></i>
+    <h2>Publishers</h2>
+    <span class="badge">6 pages — Phase 4</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/publishers</span><span class="desc">Overview — Monetize your traffic</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/monetization</span><span class="desc">Giải pháp monetization — widget types, revenue share</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/sdk</span><span class="desc">SDK integration docs — JS tag, setup guide</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/formats</span><span class="desc">Widget formats & customization</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/performance</span><span class="desc">Revenue optimization tips</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/case-studies</span><span class="desc">Publisher success stories</span><span class="priority phase4">PHASE 4</span></li>
+    <li class="page-item"><span class="url">/publishers/apply</span><span class="desc">Đăng ký tham gia network</span><span class="priority phase4">PHASE 4</span></li>
+  </ul>
+</div>
+
+<!-- COMMERCE -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-teal);"><i class="fa-solid fa-cart-shopping"></i></i>
+    <h2>Commerce</h2>
+    <span class="badge">4 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/commerce/overview</span><span class="desc">Commerce ads giới thiệu — shoppable content</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/commerce/shoppable-content</span><span class="desc">Shoppable widgets — product feeds, dynamic pricing</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/commerce/affiliate</span><span class="desc">Affiliate program — commission structure</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/commerce/merchants</span><span class="desc">Merchant integration — SKU feeds, API</span><span class="priority low">LOW</span></li>
+  </ul>
+</div>
+
+<!-- TECHNOLOGY -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-navy);"><i class="fa-solid fa-microchip"></i></i>
+    <h2>Technology</h2>
+    <span class="badge">4 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/technology/ai-engine</span><span class="desc">AI recommendation engine — deep learning, predictions</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/technology/audience-data</span><span class="desc">First-party data & segments — user graph</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/technology/brand-safety</span><span class="desc">Brand safety & fraud prevention — IVT, content classification</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/technology/privacy</span><span class="desc">Privacy-first approach — cookieless, GDPR, CCPA</span><span class="priority medium">MED</span></li>
+  </ul>
+</div>
+
+<!-- SOLUTIONS -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-teal);"><i class="fa-solid fa-chart-pie"></i></i>
+    <h2>Solutions (by Industry)</h2>
+    <span class="badge">6 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/solutions/ecommerce</span><span class="desc">E-commerce brands — ROAS optimization, product ads</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/solutions/finance</span><span class="desc">Financial services — fintech, insurance, micro-loan</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/solutions/healthcare</span><span class="desc">Healthcare & insurance — Medicaid, Medicare, ACA (Lifeline audience)</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/solutions/apps</span><span class="desc">App developers — CPI campaigns, cross-promote</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/solutions/agencies</span><span class="desc">Agencies & resellers — white-label, bulk discount</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/solutions/enterprise</span><span class="desc">Enterprise brands — managed service, account manager</span><span class="priority low">LOW</span></li>
+  </ul>
+</div>
+
+<!-- RESOURCES -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-navy);"><i class="fa-solid fa-book-open"></i></i>
+    <h2>Resources</h2>
+    <span class="badge">6 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/resources/blog</span><span class="desc">Blog & industry insights — SEO content, thought leadership</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/resources/whitepapers</span><span class="desc">Reports & research — downloadable PDFs (lead gen)</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/resources/webinars</span><span class="desc">Webinars & events — recordings, registration</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/resources/creative-gallery</span><span class="desc">Ad creative inspiration — best performing examples</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/resources/glossary</span><span class="desc">Thuật ngữ ngành — SEO value, education</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/resources/api-docs</span><span class="desc">API documentation — redirect to docs.mcv.network</span><span class="priority medium">MED</span></li>
+  </ul>
+</div>
+
+<!-- COMPANY -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: #6b7c93;"><i class="fa-solid fa-building"></i></i>
+    <h2>Company</h2>
+    <span class="badge">5 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/company/about</span><span class="desc">Về chúng tôi — mission, vision, story</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/company/team</span><span class="desc">Đội ngũ lãnh đạo — photos, bios</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/company/careers</span><span class="desc">Tuyển dụng — open positions</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/company/press</span><span class="desc">Tin tức & PR — press releases, media kit</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/company/partners</span><span class="desc">Đối tác chiến lược — partner program</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/company/contact</span><span class="desc">Liên hệ — form, offices, support</span><span class="priority medium">MED</span></li>
+  </ul>
+</div>
+
+<!-- LEGAL -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: #6b7c93;"><i class="fa-solid fa-scale-balanced"></i></i>
+    <h2>Legal</h2>
+    <span class="badge">5 pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/legal/terms</span><span class="desc">Điều khoản sử dụng</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/legal/privacy-policy</span><span class="desc">Chính sách bảo mật — GDPR, CCPA compliant</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/legal/cookie-policy</span><span class="desc">Cookie policy</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/legal/advertiser-terms</span><span class="desc">Advertiser Terms of Service</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/legal/publisher-terms</span><span class="desc">Publisher Terms of Service</span><span class="priority low">LOW</span></li>
+  </ul>
+</div>
+
+<!-- ADS PLATFORM -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--gradient-primary);"><i class="fa-solid fa-gauge-high"></i></i>
+    <h2>ads.mcv.network (Self-Serve Platform)</h2>
+    <span class="badge">SPA — 15+ views</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/dashboard</span><span class="desc">Overview: spend, impressions, conversions, ROAS</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/campaigns</span><span class="desc">Campaign list & management</span><span class="priority high">HIGH</span></li>
+  </ul>
+  <div class="children">
+    <ul class="page-list">
+      <li class="page-item"><span class="url">/campaigns/new</span><span class="desc">Create new campaign (wizard)</span></li>
+      <li class="page-item"><span class="url">/campaigns/:id</span><span class="desc">Campaign detail & optimization</span></li>
+      <li class="page-item"><span class="url">/campaigns/:id/edit</span><span class="desc">Edit campaign settings</span></li>
+    </ul>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/creatives</span><span class="desc">Creative asset library & AI generator</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/audiences</span><span class="desc">Audience segments, custom & lookalike builder</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/reports</span><span class="desc">Performance, audience insights, export</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/billing</span><span class="desc">Balance, payments, invoices, history</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/pixels</span><span class="desc">Conversion pixel setup & event tracking</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/settings</span><span class="desc">Account, team, API keys, notifications</span><span class="priority low">LOW</span></li>
+    <li class="page-item"><span class="url">/help</span><span class="desc">Help center & live chat</span><span class="priority low">LOW</span></li>
+  </ul>
+</div>
+
+<!-- DOCS -->
+<div class="sitemap-section">
+  <div class="section-title">
+    <i style="background: var(--mcv-teal);"><i class="fa-solid fa-code"></i></i>
+    <h2>docs.mcv.network (Developer Docs)</h2>
+    <span class="badge">25+ pages</span>
+  </div>
+  <ul class="page-list">
+    <li class="page-item"><span class="url">/getting-started</span><span class="desc">Quickstart, account setup, first campaign</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/web-sdk</span><span class="desc">Installation, config, formats, events, SPA support, troubleshooting</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/mobile-sdk</span><span class="desc">Android (Kotlin), iOS (Swift), React Native, Flutter</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/api</span><span class="desc">Auth, campaigns, reports, audiences, creatives, webhooks</span><span class="priority high">HIGH</span></li>
+    <li class="page-item"><span class="url">/guides</span><span class="desc">Conversion tracking, A/B testing, retargeting, commerce</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/compliance</span><span class="desc">GDPR, CCPA, consent, brand safety policies</span><span class="priority medium">MED</span></li>
+    <li class="page-item"><span class="url">/changelog</span><span class="desc">SDK & API version history</span><span class="priority low">LOW</span></li>
+  </ul>
+</div>
+
+<!-- SEO & TECH -->
+<div class="info-grid">
+  <div class="info-card">
+    <h3><i class="fa-solid fa-magnifying-glass" style="color: var(--mcv-navy);"></i> SEO Strategy</h3>
+    <ul>
+      <li>SSR/SSG with Next.js — SEO-friendly rendering</li>
+      <li>Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1</li>
+      <li>Schema markup: Organization, Product, FAQ, Breadcrumb</li>
+      <li>Auto-generated sitemap.xml submitted to Google/Bing</li>
+      <li>Multi-language: /en/, /vi/, /es/ (Phase 3+)</li>
+      <li>Long-tail blog content for organic growth</li>
+    </ul>
+  </div>
+  <div class="info-card">
+    <h3><i class="fa-solid fa-server" style="color: var(--mcv-teal);"></i> Tech Stack</h3>
+    <ul>
+      <li>Framework: Next.js 14+ (App Router)</li>
+      <li>CMS: Sanity.io / Strapi (blog, case studies)</li>
+      <li>Styling: Tailwind CSS + design tokens</li>
+      <li>Animations: Framer Motion</li>
+      <li>Analytics: PostHog + GA4</li>
+      <li>Hosting: Vercel (marketing) + AWS (app)</li>
+      <li>CDN: Cloudflare</li>
+    </ul>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="sitemap-footer">
+  <p>MCV Network Sitemap — mcv.network | Last updated: June 29, 2026</p>
+  <p style="margin-top: 4px;">Phase 1: Homepage + Advertisers + Self-serve Platform | Phase 4: Publishers section</p>
+</div>
+
+</div>
+</body>
+</html>

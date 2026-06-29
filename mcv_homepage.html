@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCV Network — Performance Advertising at Scale</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="/vendor/highcharts/highcharts.js"></script>
+<script src="/vendor/highcharts/modules/accessibility.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --mcv-navy: #204898;
+  --mcv-teal: #38C0B8;
+  --mcv-navy-dark: #0D1B2E;
+  --mcv-blue-light: #2D6BC4;
+  --mcv-teal-light: #6EE4DC;
+  --text-primary: #1A2B4A;
+  --text-secondary: #6B7C93;
+  --text-muted: #8993A4;
+  --bg-light: #F4F6F8;
+  --bg-white: #FFFFFF;
+  --border-light: #E8ECF0;
+  --gradient-primary: linear-gradient(135deg, #204898, #38C0B8);
+  --gradient-dark: linear-gradient(135deg, #0D1B2E, #204898);
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+body { font-family: var(--font-body); color: var(--text-primary); line-height: 1.6; background: var(--bg-white); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+  padding: 14px 0;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-text { font-family: var(--font-heading); font-size: 22px; font-weight: 900; color: var(--mcv-navy); letter-spacing: -0.5px; }
+.nav-logo-text span { color: var(--mcv-teal); }
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--mcv-navy); }
+.btn-nav { background: var(--mcv-navy); color: white; padding: 10px 20px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.btn-nav:hover { background: var(--mcv-blue-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(32,72,152,0.25); }
+
+/* HERO */
+.hero {
+  padding: 140px 24px 80px;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(56,192,184,0.08) 0%, transparent 70%);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -100px; left: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(32,72,152,0.06) 0%, transparent 70%);
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+.hero h1 { font-family: var(--font-heading); font-size: 52px; font-weight: 900; line-height: 1.1; letter-spacing: -1px; color: var(--mcv-navy-dark); margin-bottom: 20px; }
+.hero h1 .highlight { background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px; max-width: 520px; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary { background: var(--mcv-navy); color: white; padding: 14px 28px; border-radius: var(--radius-md); font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: var(--mcv-blue-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(32,72,152,0.2); }
+.btn-outline { background: white; color: var(--mcv-navy); padding: 14px 28px; border-radius: var(--radius-md); font-size: 15px; font-weight: 600; text-decoration: none; border: 2px solid var(--mcv-navy); transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-outline:hover { background: var(--mcv-navy); color: white; }
+.hero-visual { position: relative; }
+.hero-visual-card {
+  background: white; border-radius: var(--radius-xl); padding: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  border: 1px solid var(--border-light);
+}
+.hero-chart { height: 220px; }
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--mcv-navy-dark); padding: 40px 24px;
+}
+.stats-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+}
+.stat-item { text-align: center; }
+.stat-value { font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--mcv-teal); }
+.stat-label { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* SECTION */
+section { padding: 80px 24px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 48px; }
+.section-header h2 { font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: var(--text-primary); margin-bottom: 12px; }
+.section-header p { font-size: 16px; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+.section-tag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--mcv-teal); background: rgba(56,192,184,0.1); padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.how-card {
+  background: white; border-radius: var(--radius-xl); padding: 32px;
+  border: 1px solid var(--border-light); transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.how-card:hover { border-color: var(--mcv-teal); box-shadow: 0 12px 40px rgba(56,192,184,0.1); transform: translateY(-4px); }
+.how-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--gradient-primary); opacity: 0; transition: opacity 0.3s;
+}
+.how-card:hover::before { opacity: 1; }
+.how-number { font-family: var(--font-heading); font-size: 48px; font-weight: 900; color: var(--border-light); margin-bottom: 16px; }
+.how-card:hover .how-number { color: var(--mcv-teal-light); }
+.how-icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; margin-bottom: 16px; }
+.how-card h3 { font-family: var(--font-heading); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.how-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* FORMATS */
+.formats-section { background: var(--bg-light); }
+.formats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.format-card {
+  background: white; border-radius: var(--radius-lg); padding: 24px;
+  border: 1px solid var(--border-light); transition: all 0.2s;
+  text-align: center;
+}
+.format-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-2px); }
+.format-icon { font-size: 32px; margin-bottom: 12px; }
+.format-card h4 { font-family: var(--font-heading); font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.format-card p { font-size: 12px; color: var(--text-secondary); }
+
+/* RESULTS */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.result-card {
+  background: white; border-radius: var(--radius-lg); padding: 28px 20px;
+  text-align: center; border: 1px solid var(--border-light);
+  transition: all 0.2s;
+}
+.result-card:hover { border-color: var(--mcv-teal); }
+.result-value { font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--mcv-navy); }
+.result-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+
+/* PARTNERS */
+.partners-section { background: var(--bg-white); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.partners-logos {
+  display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap;
+  opacity: 0.5; filter: grayscale(1);
+}
+.partner-logo { font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: var(--text-primary); }
+
+/* TECHNOLOGY */
+.tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.tech-features { display: flex; flex-direction: column; gap: 20px; }
+.tech-feature {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: white; padding: 20px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light); transition: all 0.2s;
+}
+.tech-feature:hover { border-color: var(--mcv-teal); box-shadow: 0 4px 16px rgba(56,192,184,0.08); }
+.tech-feature-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  background: var(--gradient-primary); display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 16px; flex-shrink: 0;
+}
+.tech-feature h4 { font-family: var(--font-heading); font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.tech-feature p { font-size: 13px; color: var(--text-secondary); }
+
+/* CTA */
+.cta-section {
+  background: var(--gradient-dark); padding: 80px 24px; text-align: center;
+}
+.cta-section h2 { font-family: var(--font-heading); font-size: 36px; font-weight: 800; color: white; margin-bottom: 16px; }
+.cta-section p { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.btn-cta { background: var(--mcv-teal); color: white; padding: 16px 36px; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; }
+.btn-cta:hover { background: var(--mcv-teal-light); color: var(--mcv-navy-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,192,184,0.3); }
+
+/* FOOTER */
+footer { background: var(--mcv-navy-dark); padding: 60px 24px 30px; color: rgba(255,255,255,0.6); }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand h3 { font-family: var(--font-heading); font-size: 22px; font-weight: 900; color: white; margin-bottom: 12px; }
+.footer-brand h3 span { color: var(--mcv-teal); }
+.footer-brand p { font-size: 14px; line-height: 1.6; }
+.footer-col h4 { font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--mcv-teal); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.footer-social { display: flex; gap: 16px; }
+.footer-social a { color: rgba(255,255,255,0.5); font-size: 18px; transition: color 0.2s; text-decoration: none; }
+.footer-social a:hover { color: var(--mcv-teal); }
+
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 36px; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  .how-grid { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-text">MCV<span>.</span>Network</div>
+    </a>
+    <div class="nav-links">
+      <a href="/advertisers">Advertisers</a>
+      <a href="/technology">Technology</a>
+      <a href="/solutions">Solutions</a>
+      <a href="/resources">Resources</a>
+      <a href="/company">Company</a>
+      <a href="/login" class="btn-nav">Get Started <i class="fa-solid fa-arrow-right" style="font-size: 11px;"></i></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Performance Advertising<br><span class="highlight">Beyond Walled Gardens</span></h1>
+      <p>Tiếp cận hàng triệu người dùng trên mạng lưới web & app mà bạn kiểm soát. AI-powered targeting, first-party data, đo lường realtime.</p>
+      <div class="hero-ctas">
+        <a href="/advertisers/get-started" class="btn-primary"><i class="fa-solid fa-rocket"></i> Start Advertising</a>
+        <a href="/advertisers/platform" class="btn-outline"><i class="fa-solid fa-play"></i> See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 600; color: var(--text-secondary);">Campaign Performance</div>
+            <div style="font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--mcv-navy);">$12,450 <span style="font-size: 13px; color: var(--mcv-teal); font-weight: 600;">↑ 34%</span></div>
+          </div>
+          <div style="background: rgba(56,192,184,0.1); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--mcv-teal);">Live</div>
+        </div>
+        <div id="hero-chart" class="hero-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-value">600M+</div>
+      <div class="stat-label">Daily Active Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">14,000+</div>
+      <div class="stat-label">Digital Properties</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">100B+</div>
+      <div class="stat-label">Recommendations/Month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">679%</div>
+      <div class="stat-label">Average ROAS</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">How It Works</div>
+      <h2>Reach. Convert. Grow.</h2>
+      <p>Ba bước đơn giản để scale performance campaigns trên open web</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-number">01</div>
+        <div class="how-icon" style="background: var(--mcv-navy);"><i class="fa-solid fa-bullseye"></i></div>
+        <h3>Reach Your Audience</h3>
+        <p>AI matching giúp tìm đúng người dùng trên mạng lưới web & app. Contextual targeting, lookalike audiences, first-party segments.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-number">02</div>
+        <div class="how-icon" style="background: linear-gradient(135deg, var(--mcv-navy), var(--mcv-teal));"><i class="fa-solid fa-arrows-rotate"></i></div>
+        <h3>Convert at Scale</h3>
+        <p>Native ads blend tự nhiên với content. Performance AI tối ưu realtime cho conversions, leads, purchases — không chỉ clicks.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-number">03</div>
+        <div class="how-icon" style="background: var(--mcv-teal);"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Grow Revenue</h3>
+        <p>Đo lường ROAS, CPA, LTV chính xác. Tự động scale winning campaigns. Giảm CPA trung bình 42% so với walled gardens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AD FORMATS -->
+<section class="formats-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Ad Formats</div>
+      <h2>Diverse Formats, Maximum Impact</h2>
+      <p>Quảng cáo hiển thị tự nhiên trên trusted media properties</p>
+    </div>
+    <div class="formats-grid">
+      <div class="format-card">
+        <div class="format-icon">📰</div>
+        <h4>Native Widget</h4>
+        <p>Content recommendation cards — below article, in-feed</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">🛒</div>
+        <h4>Commerce Cards</h4>
+        <p>Shoppable product cards with price, rating, CTA</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">🎥</div>
+        <h4>Video Outstream</h4>
+        <p>Auto-play muted video, in-content placement</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">📱</div>
+        <h4>In-App Native</h4>
+        <p>Seamless mobile experience, rewarded & interstitial</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">🖼️</div>
+        <h4>Display Banner</h4>
+        <p>IAB standard sizes — header, sidebar, sticky</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">⚡</div>
+        <h4>Dynamic Creative</h4>
+        <p>AI-generated headlines & visuals, auto A/B tested</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Proven Results</div>
+      <h2>Advertisers Winning with MCV</h2>
+      <p>Performance metrics trung bình từ các chiến dịch trên nền tảng</p>
+    </div>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-value">679%</div>
+        <div class="result-label">Average ROAS</div>
+      </div>
+      <div class="result-card">
+        <div class="result-value">-42%</div>
+        <div class="result-label">Cost per Sale</div>
+      </div>
+      <div class="result-card">
+        <div class="result-value">+130%</div>
+        <div class="result-label">Conversion Rate</div>
+      </div>
+      <div class="result-card">
+        <div class="result-value">+50%</div>
+        <div class="result-label">Click-Through Rate</div>
+      </div>
+      <div class="result-card">
+        <div class="result-value">100K</div>
+        <div class="result-label">Leads / Month</div>
+      </div>
+      <div class="result-card">
+        <div class="result-value">2X</div>
+        <div class="result-label">Session Duration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section style="background: var(--bg-light);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Technology</div>
+      <h2>AI-Powered Performance Engine</h2>
+      <p>17+ years of recommendation data, cookieless-ready, privacy-first</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-features">
+        <div class="tech-feature">
+          <div class="tech-feature-icon"><i class="fa-solid fa-brain"></i></div>
+          <div>
+            <h4>Predictive AI Targeting</h4>
+            <p>Deep learning models dự đoán user intent, tối ưu conversions realtime trên mọi placement.</p>
+          </div>
+        </div>
+        <div class="tech-feature">
+          <div class="tech-feature-icon"><i class="fa-solid fa-database"></i></div>
+          <div>
+            <h4>First-Party Data</h4>
+            <p>Data trực tiếp từ hệ sinh thái — browsing behavior, app usage, demographics verified.</p>
+          </div>
+        </div>
+        <div class="tech-feature">
+          <div class="tech-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h4>Brand Safety & Fraud Prevention</h4>
+            <p>ML-powered fraud detection, content classification, IVT filtering < 2%.</p>
+          </div>
+        </div>
+        <div class="tech-feature">
+          <div class="tech-feature-icon"><i class="fa-solid fa-cookie-bite"></i></div>
+          <div>
+            <h4>Cookieless Ready</h4>
+            <p>Contextual AI + on-device signals + publisher first-party IDs. Sẵn sàng cho tương lai.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div id="tech-chart" style="height: 320px; background: white; border-radius: var(--radius-xl); border: 1px solid var(--border-light); padding: 16px;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-section" style="padding: 48px 24px;">
+  <div class="section-inner">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <p style="font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;">Trusted by leading brands & publishers</p>
+    </div>
+    <div class="partners-logos">
+      <div class="partner-logo">Yahoo</div>
+      <div class="partner-logo">Samsung</div>
+      <div class="partner-logo">NBC</div>
+      <div class="partner-logo">Hyundai</div>
+      <div class="partner-logo">eToro</div>
+      <div class="partner-logo">Bosch</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Grow?</h2>
+  <p>Bắt đầu với $100 — không yêu cầu ngân sách tối thiểu. Setup trong 5 phút.</p>
+  <a href="/advertisers/get-started" class="btn-cta"><i class="fa-solid fa-rocket"></i> Start Your First Campaign</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>MCV<span>.</span>Network</h3>
+        <p>Performance advertising at scale. Reach. Convert. Grow. Beyond walled gardens.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Advertisers</h4>
+        <a href="/advertisers/platform">Platform</a>
+        <a href="/advertisers/formats">Ad Formats</a>
+        <a href="/advertisers/targeting">Targeting</a>
+        <a href="/advertisers/pricing">Pricing</a>
+        <a href="/advertisers/case-studies">Case Studies</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="/resources/blog">Blog</a>
+        <a href="https://docs.mcv.network">Documentation</a>
+        <a href="/resources/api-docs">API Reference</a>
+        <a href="/resources/webinars">Webinars</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/company/about">About Us</a>
+        <a href="/company/careers">Careers</a>
+        <a href="/company/press">Press</a>
+        <a href="/company/contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 MCV Network. All rights reserved. <a href="/legal/privacy-policy" style="color: rgba(255,255,255,0.6);">Privacy</a> · <a href="/legal/terms" style="color: rgba(255,255,255,0.6);">Terms</a></div>
+      <div class="footer-social">
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+// Hero Chart
+Highcharts.chart('hero-chart', {
+  chart: { type: 'areaspline', backgroundColor: 'transparent', height: 200, margin: [10, 0, 30, 40] },
+  title: { text: null },
+  xAxis: { categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], labels: { style: { color: '#8993A4', fontSize: '10px' } }, lineColor: '#E8ECF0', tickColor: '#E8ECF0' },
+  yAxis: { title: { text: null }, labels: { format: '${value}', style: { color: '#8993A4', fontSize: '10px' } }, gridLineColor: '#F0F2F5' },
+  tooltip: { backgroundColor: '#fff', borderColor: '#E8ECF0', style: { color: '#1A2B4A' }, valuePrefix: '$' },
+  plotOptions: { areaspline: { fillColor: { linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 }, stops: [[0, 'rgba(56,192,184,0.2)'], [1, 'rgba(56,192,184,0)']] }, lineWidth: 3, marker: { radius: 0 } } },
+  series: [{ name: 'Revenue', data: [1420, 1680, 1550, 1890, 2100, 1950, 2450], color: '#38C0B8' }],
+  legend: { enabled: false },
+  credits: { enabled: false },
+});
+
+// Tech Chart
+Highcharts.chart('tech-chart', {
+  chart: { type: 'column', backgroundColor: 'transparent', style: { fontFamily: 'Inter, sans-serif' } },
+  title: { text: 'Performance vs Walled Gardens', style: { color: '#1A2B4A', fontSize: '14px', fontWeight: '700' } },
+  xAxis: { categories: ['CPA', 'CTR', 'ROAS', 'Viewability'], labels: { style: { color: '#6B7C93', fontSize: '11px' } }, lineColor: '#E8ECF0' },
+  yAxis: { title: { text: null }, labels: { style: { color: '#6B7C93', fontSize: '10px' } }, gridLineColor: '#F0F2F5' },
+  tooltip: { backgroundColor: '#fff', borderColor: '#E8ECF0', style: { color: '#1A2B4A' } },
+  plotOptions: { column: { borderRadius: 6, borderWidth: 0 } },
+  series: [
+    { name: 'MCV Network', data: [85, 92, 95, 88], color: '#204898' },
+    { name: 'Industry Avg', data: [55, 60, 50, 65], color: '#E8ECF0' }
+  ],
+  legend: { align: 'center', verticalAlign: 'bottom', itemStyle: { color: '#6B7C93', fontSize: '11px' } },
+  credits: { enabled: false },
+});
+</script>
+
+</body>
+</html>
