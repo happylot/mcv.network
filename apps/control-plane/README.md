@@ -4,7 +4,7 @@ Laravel control plane for the MCV Network advertiser dashboard, account onboardi
 
 ## Requirements
 
-- PHP 8.3+
+- PHP 8.4.1+
 - Composer 2
 - Node.js 22.12.0, or any version matching `^20.19.0 || >=22.12.0`
 - SQLite for local development

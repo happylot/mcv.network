@@ -7,7 +7,7 @@ The control plane is a Laravel application under `apps/control-plane`. It should
 ## Runtime
 
 - Nginx
-- PHP-FPM 8.3+
+- PHP-FPM 8.4.1+
 - PostgreSQL
 - Redis
 - Supervisor or systemd workers for queues
@@ -46,7 +46,7 @@ server {
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_pass unix:/run/php/php8.4-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
     }
