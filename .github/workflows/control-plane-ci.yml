@@ -1,0 +1,63 @@
+name: Control Plane CI
+
+on:
+  pull_request:
+    paths:
+      - "apps/control-plane/**"
+      - ".github/workflows/control-plane-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/control-plane/**"
+      - ".github/workflows/control-plane-ci.yml"
+
+jobs:
+  test:
+    name: Laravel tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/control-plane
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, pdo_sqlite, redis
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: apps/control-plane/.nvmrc
+          cache: npm
+          cache-dependency-path: apps/control-plane/package-lock.json
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --ansi
+          touch database/database.sqlite
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      - name: Lint PHP
+        run: composer lint
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Run tests
+        run: composer test

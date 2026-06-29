@@ -1,0 +1,25 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Codex/editor state
+.codex/
+.cursor/
+.idea/
+.vscode/
+.zed/
+
+# Laravel
+apps/control-plane/vendor/
+apps/control-plane/node_modules/
+apps/control-plane/public/build/
+apps/control-plane/public/hot
+apps/control-plane/public/storage
+apps/control-plane/storage/*.key
+apps/control-plane/storage/logs/*.log
+apps/control-plane/.phpunit.result.cache
+
+# OS/build/cache
+Thumbs.db
+*.log
