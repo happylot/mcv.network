@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Why MCV</div><h2>Outcomes for Your Vertical</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-bag-shopping"></i></div><h3>Dynamic Product Ads</h3><p>Auto-generated shoppable cards from your catalog.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>ROAS Optimization</h3><p>AI bidding tuned to return on ad spend.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-rotate"></i></div><h3>Retargeting</h3><p>Recover carts and re-engage shoppers across the web.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

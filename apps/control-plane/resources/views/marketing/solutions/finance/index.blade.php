@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Why MCV</div><h2>Outcomes for Your Vertical</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-building-columns"></i></div><h3>Fintech &amp; Banking</h3><p>Drive qualified account sign-ups.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-umbrella"></i></div><h3>Insurance</h3><p>Quote and lead generation at scale.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div><h3>Lending</h3><p>Micro-loan and credit acquisition.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-arrow-trend-up"></i></div><h3>How to Improve Ad ROAS</h3><p>Five levers that move return on ad spend the fastest.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-newspaper"></i></div><h3>Native vs Display Ads</h3><p>When each format wins — and how to combine them.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-cookie-bite"></i></div><h3>Life After Cookies</h3><p>A practical guide to cookieless targeting in 2026.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

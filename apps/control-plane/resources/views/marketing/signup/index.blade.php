@@ -20,14 +20,14 @@
     <div class="auth-form"><div class="auth-form-inner">
     <h1>Create your account</h1>
     <p class="sub">Start advertising on the open web in minutes.</p>
-    <form onsubmit="event.preventDefault(); window.location.href='https://ads.mcv.network';">
+    <form onsubmit="event.preventDefault(); window.location.href='https://ads.mcv.network/signup';">
       <div class="form-field"><label>Full name</label><input type="text" required></div>
       <div class="form-field"><label>Work email</label><input type="email" required></div>
       <div class="form-field"><label>Password</label><input type="password" required></div>
       <div class="form-field"><label>I am a…</label><select><option>Advertiser</option><option>Publisher</option><option>Agency</option></select></div>
       <button class="btn btn-primary" type="submit">Create Account <i class="fa-solid fa-arrow-right"></i></button>
     </form>
-    <p class="auth-alt">Already have an account? <a href="/login/">Log in</a></p>
+    <p class="auth-alt">Already have an account? <a href="https://ads.mcv.network/login">Log in</a></p>
   </div></div>
   </div>
 <div id="mcv-footer"></div>

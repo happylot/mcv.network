@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Overview</div><h2>Built for Publisher Growth</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-coins"></i></div><h3>Maximize Yield</h3><p>Smart auction and fill optimization for every impression.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-gauge"></i></div><h3>Lightweight</h3><p>Async loading that keeps Core Web Vitals healthy.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-chart-line"></i></div><h3>Clear Reporting</h3><p>Real-time earnings, fill rate and RPM dashboards.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

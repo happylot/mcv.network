@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Library</div><h2>What You Will Find</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-file-lines"></i></div><h3>Practical Guides</h3><p>Step-by-step playbooks you can apply today.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-chart-column"></i></div><h3>Benchmarks</h3><p>Industry data to calibrate your campaigns.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div><h3>Education</h3><p>Learn the open web and performance advertising.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

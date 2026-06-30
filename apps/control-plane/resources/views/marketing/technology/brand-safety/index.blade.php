@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Capabilities</div><h2>Under the Hood</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div><h3>IVT Filtering</h3><p>Invalid traffic kept below 2% with ML detection.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-filter"></i></div><h3>Content Classification</h3><p>Page-level safety scoring before every placement.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-user-shield"></i></div><h3>Verified Inventory</h3><p>Third-party verified, transparent supply paths.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

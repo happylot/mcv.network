@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Commerce Suite</div><h2>From Discovery to Checkout</h2></div><div class="grid grid-auto"><div class="tile"><div class="tile-icon"><i class="fa-solid fa-cart-shopping"></i></div><h4>Shoppable Content</h4><p>Dynamic product cards with live pricing</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-handshake-angle"></i></div><h4>Affiliate</h4><p>Commission-based commerce at scale</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-store"></i></div><h4>Merchants</h4><p>SKU feeds &amp; catalog integration</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-bolt"></i></div><h4>Dynamic Pricing</h4><p>Real-time price &amp; inventory sync</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

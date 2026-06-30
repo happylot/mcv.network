@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Capabilities</div><h2>Under the Hood</h2></div><div class="grid grid-3"><div class="card"><div class="card-icon"><i class="fa-solid fa-brain"></i></div><h3>Deep Learning</h3><p>Neural models trained on 17+ years of recommendation data.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-bolt"></i></div><h3>Real-Time Bidding</h3><p>Sub-100ms decisioning on every impression.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-arrows-rotate"></i></div><h3>Continuous Learning</h3><p>Models retrain on outcomes to keep improving ROAS.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

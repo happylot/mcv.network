@@ -93,6 +93,22 @@ The GitHub Actions workflow at `.github/workflows/control-plane-ci.yml` runs:
 
 ## Domain Split
 
-- Marketing site: `mcv.network`
-- Dashboard/API: `ads.mcv.network`
+- Marketing site: `mcv.network` runs on WordPress and owns SEO, content, blog, and landing pages.
+- Dashboard/API: `ads.mcv.network` runs this Laravel app for advertiser login, signup, dashboard, billing, and OAuth callbacks.
 - SDK CDN: `cdn.mcv.network` or `cdn.softelads.com`
+
+## Marketing Login Links
+
+On the live WordPress marketing site, every Login CTA should point to the advertiser portal:
+
+```text
+https://ads.mcv.network/login
+```
+
+Signup CTAs can point to:
+
+```text
+https://ads.mcv.network/signup
+```
+
+Keep these as absolute URLs in the WordPress header, footer, menus, buttons, and landing page blocks so `mcv.network/login` is not used by the marketing site.

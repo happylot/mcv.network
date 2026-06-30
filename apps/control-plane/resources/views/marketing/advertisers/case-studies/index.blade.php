@@ -17,7 +17,7 @@
 <section class="section">
   <div class="section-inner"><div class="grid grid-3"><div class="card"><div class="card-icon" style="background:var(--mcv-navy)"><i class="fa-solid fa-bag-shopping"></i></div><h3>E-commerce: +679% ROAS</h3><p>A DTC retailer scaled spend 4x while cutting cost per sale 42% with dynamic commerce cards.</p></div><div class="card"><div class="card-icon" style="background:var(--mcv-teal)"><i class="fa-solid fa-heart-pulse"></i></div><h3>Healthcare: 10K enrollments</h3><p>An ACA insurer generated 10,000 enrollments at a $12 CPL with compliant audience targeting.</p></div><div class="card"><div class="card-icon"><i class="fa-solid fa-building-columns"></i></div><h3>Finance: -38% CPA</h3><p>A fintech app drove qualified sign-ups at 38% lower CPA vs social channels.</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

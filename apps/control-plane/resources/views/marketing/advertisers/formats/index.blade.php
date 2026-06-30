@@ -20,7 +20,7 @@
 <section class="section alt">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Benchmarks</div><h2>Performance by Format</h2></div><a id="specs"></a><div class="table-wrap"><table class="mcv"><thead><tr><th>Format</th><th>CTR</th><th>eCPM</th><th>Best for</th></tr></thead><tbody><tr><td>Native Widget</td><td>0.8–2.4%</td><td>$2–6</td><td>Awareness &amp; consideration</td></tr><tr><td>Commerce Card</td><td>1.2–3.1%</td><td>$4–10</td><td>Direct response &amp; sales</td></tr><tr><td>Video Outstream</td><td>0.5–1.5%</td><td>$6–14</td><td>Brand lift</td></tr><tr><td>In-App Native</td><td>1.0–2.8%</td><td>$3–8</td><td>App installs &amp; engagement</td></tr></tbody></table></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

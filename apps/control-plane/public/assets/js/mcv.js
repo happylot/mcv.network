@@ -28,11 +28,11 @@
         '</a>' +
         '<button class="nav-toggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>' +
         '<div class="nav-links" id="navLinks">' + links +
-          '<a href="/login/" class="nav-login mobile-only">Log in</a>' +
+          '<a href="https://ads.mcv.network/login" class="nav-login mobile-only">Log in</a>' +
         '</div>' +
         '<div class="nav-cta">' +
-          '<a href="/login/" class="nav-login">Log in</a>' +
-          '<a href="/signup/" class="btn-nav">Get Started <i class="fa-solid fa-arrow-right"></i></a>' +
+          '<a href="https://ads.mcv.network/login" class="nav-login">Log in</a>' +
+          '<a href="https://ads.mcv.network/signup" class="btn-nav">Get Started <i class="fa-solid fa-arrow-right"></i></a>' +
         '</div>' +
       '</div>' +
     '</nav>';

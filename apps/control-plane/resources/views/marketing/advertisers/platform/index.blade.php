@@ -23,7 +23,7 @@
 <section class="section alt">
   <div class="section-inner"><div class="section-header"><div class="section-tag">vs Walled Gardens</div><h2>How MCV Compares</h2></div><div class="table-wrap"><table class="mcv"><thead><tr><th>Metric</th><th>MCV Network</th><th>Google</th><th>Meta</th></tr></thead><tbody><tr><td>Average CPM</td><td><span class="hl">$3.50</span></td><td>$9.20</td><td>$11.40</td></tr><tr><td>Transparency</td><td><span class="hl">Full log-level</span></td><td>Limited</td><td>Limited</td></tr><tr><td>First-party data</td><td><span class="hl">Included</span></td><td>Add-on</td><td>Add-on</td></tr><tr><td>Minimum budget</td><td><span class="hl">$100</span></td><td>$500+</td><td>$500+</td></tr></tbody></table></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>

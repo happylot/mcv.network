@@ -21,7 +21,7 @@
 <section class="section alt">
   <div class="section-inner"><div class="section-header"><div class="section-tag">Explore</div><h2>Dive Deeper</h2></div><div class="grid grid-auto"><div class="tile"><div class="tile-icon"><i class="fa-solid fa-gauge-high"></i></div><h4>Platform</h4><p>Dashboard, AI targeting, automation</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-shapes"></i></div><h4>Ad Formats</h4><p>Native, video, commerce, display</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-users-viewfinder"></i></div><h4>Targeting</h4><p>Contextual, lookalike, first-party</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-tags"></i></div><h4>Pricing</h4><p>CPM / CPC / CPA — flexible</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-trophy"></i></div><h4>Case Studies</h4><p>Proven ROI across verticals</p></div><div class="tile"><div class="tile-icon"><i class="fa-solid fa-rocket"></i></div><h4>Get Started</h4><p>Launch in 5 minutes</p></div></div></div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/signup/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
+<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum commitment. Launch your first campaign in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="https://ads.mcv.network/signup" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Get Started</a></div></section>
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
 </body>
