@@ -43,8 +43,12 @@ jobs:
 
       - name: Verify auth links target app domain
         run: |
-          if grep -R 'href="/signup/\|href="/login/' --include='*.html' .; then
+          if grep -R -E "href=['\"]/(signup|login)/?['\"]" --include='*.html' --include='*.js' .; then
             echo "Found local auth links in static marketing pages."
+            exit 1
+          fi
+          if grep -R -E "window\.location\.href=['\"]https://ads\.mcv\.network['\"]" --include='*.html' --include='*.js' .; then
+            echo "Found app-domain redirect without /login or /signup path."
             exit 1
           fi
 
