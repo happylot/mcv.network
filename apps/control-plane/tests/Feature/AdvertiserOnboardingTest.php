@@ -86,4 +86,67 @@ class AdvertiserOnboardingTest extends TestCase
         $this->assertSame(12550, $wallet->refresh()->pending_balance_cents);
         $this->assertSame(0, $wallet->available_balance_cents);
     }
+
+    public function test_stripe_checkout_webhook_posts_top_up_to_available_balance_once(): void
+    {
+        config(['services.stripe.webhook_secret' => null]);
+
+        $user = User::create([
+            'name' => 'Mai Le',
+            'email' => 'mai@example.com',
+            'password' => 'password123',
+        ]);
+
+        $account = Account::create([
+            'owner_user_id' => $user->id,
+            'type' => 'advertiser',
+            'name' => 'Mai Growth',
+            'status' => 'pending',
+            'currency' => 'USD',
+        ]);
+        $account->users()->attach($user->id, ['role' => 'owner']);
+        $wallet = $account->wallet()->create(['currency' => 'USD']);
+        $payment = $account->payments()->create([
+            'provider' => 'stripe_checkout',
+            'provider_reference' => 'cs_test_topup_123',
+            'amount_cents' => 25000,
+            'currency' => 'USD',
+            'status' => 'requires_payment',
+            'metadata' => ['stripe_checkout_session_id' => 'cs_test_topup_123'],
+        ]);
+
+        $payload = [
+            'id' => 'evt_test_checkout_completed',
+            'type' => 'checkout.session.completed',
+            'data' => [
+                'object' => [
+                    'id' => 'cs_test_topup_123',
+                    'payment_status' => 'paid',
+                    'payment_intent' => 'pi_test_topup_123',
+                    'metadata' => [
+                        'payment_id' => (string) $payment->id,
+                        'account_id' => (string) $account->id,
+                        'type' => 'wallet_topup',
+                    ],
+                ],
+            ],
+        ];
+
+        $this->postJson('/stripe/webhook', $payload)->assertOk();
+        $this->postJson('/stripe/webhook', $payload)->assertOk();
+
+        $this->assertSame(25000, $wallet->refresh()->available_balance_cents);
+        $this->assertSame(0, $wallet->pending_balance_cents);
+        $this->assertSame('succeeded', $payment->refresh()->status);
+        $this->assertNotNull($payment->confirmed_at);
+        $this->assertDatabaseCount('wallet_ledger_entries', 1);
+        $this->assertDatabaseHas('wallet_ledger_entries', [
+            'wallet_id' => $wallet->id,
+            'type' => 'topup',
+            'direction' => 'credit',
+            'amount_cents' => 25000,
+            'status' => 'posted',
+            'idempotency_key' => 'stripe_checkout:cs_test_topup_123:posted',
+        ]);
+    }
 }

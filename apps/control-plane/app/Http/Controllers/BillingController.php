@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Services\Stripe\StripeTopUpService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,11 +26,11 @@ class BillingController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, StripeTopUpService $stripe): RedirectResponse
     {
         $validated = $request->validate([
             'amount' => ['required', 'numeric', 'min:10', 'max:50000'],
-            'method' => ['required', 'in:bank_transfer'],
+            'method' => ['required', 'in:bank_transfer,stripe_checkout'],
             'reference_note' => ['nullable', 'string', 'max:500'],
         ]);
 
@@ -38,6 +39,28 @@ class BillingController extends Controller
         abort_if(! $account, 404);
 
         $amountCents = (int) round(((float) $validated['amount']) * 100);
+
+        if ($validated['method'] === 'stripe_checkout') {
+            $payment = Payment::create([
+                'account_id' => $account->id,
+                'provider' => 'stripe_checkout',
+                'amount_cents' => $amountCents,
+                'currency' => $account->currency,
+                'status' => 'requires_payment',
+                'metadata' => [
+                    'reference_note' => $validated['reference_note'] ?? null,
+                ],
+            ]);
+
+            $checkoutUrl = $stripe->createCheckoutSession(
+                $payment,
+                $account,
+                route('billing.stripe.success', absolute: true).'?session_id={CHECKOUT_SESSION_ID}',
+                route('billing.stripe.cancel', absolute: true),
+            );
+
+            return redirect()->away($checkoutUrl);
+        }
 
         DB::transaction(function () use ($account, $amountCents, $validated): void {
             $payment = Payment::create([
@@ -71,5 +94,31 @@ class BillingController extends Controller
         return redirect()
             ->route('billing.index')
             ->with('status', 'Top-up request created. Funds will move to available balance after admin confirmation.');
+    }
+
+    public function stripeSuccess(Request $request, StripeTopUpService $stripe): RedirectResponse
+    {
+        $sessionId = $request->query('session_id');
+
+        if (is_string($sessionId) && $sessionId !== '') {
+            $payment = $stripe->fulfillCheckoutSession($sessionId);
+
+            if ($payment) {
+                return redirect()
+                    ->route('billing.index')
+                    ->with('status', 'Stripe payment received. Wallet balance has been updated.');
+            }
+        }
+
+        return redirect()
+            ->route('billing.index')
+            ->with('status', 'Stripe checkout is processing. Your wallet will update after payment confirmation.');
+    }
+
+    public function stripeCancel(): RedirectResponse
+    {
+        return redirect()
+            ->route('billing.index')
+            ->with('status', 'Stripe checkout was cancelled. No funds were added.');
     }
 }

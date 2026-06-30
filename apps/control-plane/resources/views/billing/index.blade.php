@@ -36,6 +36,7 @@
                     <div class="field">
                         <label for="method">Payment method</label>
                         <select id="method" name="method" required>
+                            <option value="stripe_checkout" @selected(old('method') === 'stripe_checkout')>Card / wallet via Stripe Checkout</option>
                             <option value="bank_transfer">Manual bank transfer</option>
                         </select>
                         @error('method') <div class="error">{{ $message }}</div> @enderror
@@ -53,7 +54,7 @@
 
             <div class="panel">
                 <h2>Bank transfer instructions</h2>
-                <p class="muted">Use the generated payment reference in your bank transfer memo. Admin reconciliation will post the funds to available balance in Phase 2.</p>
+                <p class="muted">Stripe Checkout posts funds automatically after payment confirmation. Manual bank transfers still require admin reconciliation.</p>
                 <p><strong>Beneficiary:</strong> MCV Network Ads</p>
                 <p><strong>Currency:</strong> USD</p>
                 <p><strong>Status after request:</strong> Pending</p>

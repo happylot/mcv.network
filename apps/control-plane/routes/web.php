@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketingPageController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', MarketingPageController::class)->name('marketing.home');
@@ -26,7 +27,11 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/top-up', [BillingController::class, 'store'])->name('billing.top-up.store');
+    Route::get('/billing/stripe/success', [BillingController::class, 'stripeSuccess'])->name('billing.stripe.success');
+    Route::get('/billing/stripe/cancel', [BillingController::class, 'stripeCancel'])->name('billing.stripe.cancel');
 });
+
+Route::post('/stripe/webhook', StripeWebhookController::class)->name('stripe.webhook');
 
 Route::get('/{path}', MarketingPageController::class)
     ->where('path', '.*')
