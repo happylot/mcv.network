@@ -38,6 +38,20 @@
             --warning: #b86a00;
         }
 
+        .portal-body[data-theme="dark"] {
+            color-scheme: dark;
+            --text-primary: #E7EEF8;
+            --text-secondary: #A5B4C7;
+            --text-muted: #7F8FA5;
+            --bg-light: #0D1B2E;
+            --bg-white: #13243A;
+            --border-light: #24384F;
+            --border: #35516F;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.18);
+            --shadow-md: 0 8px 20px rgba(0,0,0,0.2);
+            --shadow-lg: 0 18px 46px rgba(0,0,0,0.28);
+        }
+
         * { box-sizing: border-box; }
         body {
             margin: 0;
@@ -561,11 +575,11 @@
         }
 
         .portal-sidebar {
-            background: #fff;
+            background: var(--bg-white);
             border-right: 1px solid var(--border-light);
             color: var(--text-secondary);
             min-height: 100vh;
-            padding: 14px 14px 24px;
+            padding: 0 14px 24px;
             position: sticky;
             top: 0;
         }
@@ -635,23 +649,31 @@
         }
 
         .portal-main {
+            background: var(--bg-light);
+            display: flex;
+            flex-direction: column;
             min-width: 0;
         }
 
         .portal-topbar {
             align-items: center;
-            background: rgba(255,255,255,0.94);
+            background: rgba(255,255,255,0.96);
             border-bottom: 1px solid var(--border-light);
             color: var(--text-secondary);
             display: flex;
             gap: 12px;
             height: 58px;
             justify-content: flex-end;
+            margin: 0;
             padding: 0 16px;
             position: sticky;
             top: 0;
             z-index: 30;
             backdrop-filter: blur(12px);
+        }
+
+        .portal-body[data-theme="dark"] .portal-topbar {
+            background: rgba(19,36,58,0.96);
         }
 
         .portal-icon-btn,
@@ -668,12 +690,47 @@
         .portal-icon-btn {
             background: var(--bg-light);
             color: var(--text-secondary);
+            cursor: pointer;
         }
 
         .portal-avatar {
             background: rgba(32,72,152,0.08);
             color: var(--mcv-navy);
             font-weight: 900;
+        }
+
+        .profile-chip,
+        .role-chip {
+            align-items: center;
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
+            display: inline-flex;
+            gap: 8px;
+            height: 34px;
+            min-width: 0;
+            padding: 0 10px;
+        }
+
+        .role-chip {
+            background: rgba(56,192,184,0.12);
+            color: #18766f;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .profile-chip {
+            background: var(--bg-white);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 800;
+            padding-left: 4px;
+        }
+
+        .profile-name {
+            max-width: 132px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .top-wallet {
@@ -725,12 +782,12 @@
         .dash-stat-grid {
             display: grid;
             gap: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             margin-bottom: 18px;
         }
 
         .dash-card {
-            background: #fff;
+            background: var(--bg-white);
             border: 1px solid var(--border-light);
             border-radius: 8px;
             box-shadow: none;
@@ -749,17 +806,19 @@
             align-items: flex-start;
             display: grid;
             gap: 12px;
-            grid-template-columns: 52px 1fr;
+            grid-template-columns: 44px minmax(0, 1fr);
+            grid-template-rows: auto 1fr;
+            min-height: 132px;
         }
 
         .stat-icon {
             align-items: center;
             border-radius: 8px;
             display: inline-flex;
-            font-size: 20px;
-            height: 48px;
+            font-size: 18px;
+            height: 42px;
             justify-content: center;
-            width: 48px;
+            width: 42px;
         }
 
         .stat-icon.blue,
@@ -785,6 +844,7 @@
             font-size: 13px;
             font-weight: 700;
             line-height: 1.35;
+            min-height: 36px;
         }
 
         .dash-stat-value {
@@ -795,6 +855,7 @@
             font-weight: 900;
             line-height: 1.2;
             margin-top: 6px;
+            white-space: nowrap;
         }
 
         .dash-card-link {
@@ -803,6 +864,7 @@
             font-weight: 900;
             grid-column: 1 / -1;
             margin-top: 2px;
+            place-self: end start;
         }
 
         .dashboard-grid {
@@ -840,6 +902,12 @@
             min-width: 850px;
         }
 
+        .website-table--compact {
+            min-width: 0;
+            table-layout: fixed;
+            width: 100%;
+        }
+
         .website-table th {
             color: var(--text-secondary);
             font-size: 12px;
@@ -854,6 +922,31 @@
             vertical-align: middle;
         }
 
+        .website-table--compact th,
+        .website-table--compact td {
+            font-size: 12px;
+            padding: 10px 8px;
+        }
+
+        .website-table--compact th:nth-child(1),
+        .website-table--compact td:nth-child(1) { width: 23%; }
+        .website-table--compact th:nth-child(2),
+        .website-table--compact td:nth-child(2),
+        .website-table--compact th:nth-child(3),
+        .website-table--compact td:nth-child(3) { width: 7%; }
+        .website-table--compact th:nth-child(4),
+        .website-table--compact td:nth-child(4),
+        .website-table--compact th:nth-child(5),
+        .website-table--compact td:nth-child(5),
+        .website-table--compact th:nth-child(6),
+        .website-table--compact td:nth-child(6),
+        .website-table--compact th:nth-child(7),
+        .website-table--compact td:nth-child(7),
+        .website-table--compact th:nth-child(8),
+        .website-table--compact td:nth-child(8) { width: 9%; }
+        .website-table--compact th:nth-child(9),
+        .website-table--compact td:nth-child(9) { width: 18%; }
+
         .website-name {
             align-items: center;
             color: var(--text-primary);
@@ -863,10 +956,34 @@
             min-width: 220px;
         }
 
+        .website-table--compact .website-name {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .website-domain,
+        .website-table--compact td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .website-domain {
+            min-width: 0;
+        }
+
+        .website-table--compact .badge,
+        .website-table--compact .price,
+        .website-table--compact .score-pill {
+            max-width: 100%;
+            white-space: nowrap;
+        }
+
         .domain-dot {
             align-items: center;
             border-radius: 50%;
             display: inline-flex;
+            flex: none;
             font-size: 11px;
             height: 18px;
             justify-content: center;
@@ -930,7 +1047,7 @@
         }
 
         .wallet-card {
-            background: #fff;
+            background: var(--bg-white);
             border: 1px solid var(--border-light);
             color: var(--text-primary);
             min-height: 150px;
@@ -969,7 +1086,7 @@
         }
 
         .wallet-mini-icon {
-            background: #fff;
+            background: var(--bg-white);
             border-radius: 5px;
             color: var(--mcv-navy);
             font-size: 22px;
@@ -989,7 +1106,7 @@
         }
 
         .activity-card {
-            background: #fff;
+            background: var(--bg-white);
             border: 1px solid var(--border-light);
             border-radius: 8px;
             overflow: hidden;
@@ -997,7 +1114,7 @@
 
         .activity-head {
             align-items: center;
-            background: #fff;
+            background: var(--bg-white);
             border-bottom: 1px solid var(--border-light);
             color: var(--text-primary);
             display: flex;
@@ -1019,25 +1136,44 @@
 
         .activity-list {
             display: grid;
-            gap: 10px;
-            padding: 12px;
+            gap: 0;
+            padding: 12px 16px 14px;
+            position: relative;
+        }
+
+        .activity-list::before {
+            background: var(--border-light);
+            bottom: 24px;
+            content: "";
+            left: 26px;
+            position: absolute;
+            top: 24px;
+            width: 1px;
         }
 
         .activity-item {
             align-items: flex-start;
-            background: var(--bg-light);
-            border-radius: 8px;
-            box-shadow: inset 0 0 0 1px var(--border-light);
             display: grid;
-            gap: 10px;
-            grid-template-columns: 26px 1fr;
-            padding: 16px;
+            gap: 8px;
+            grid-template-columns: 24px minmax(0, 1fr);
+            padding: 8px 0;
+            position: relative;
         }
 
         .activity-item i {
+            align-items: center;
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
             color: var(--mcv-teal);
-            font-size: 20px;
-            margin-top: 2px;
+            display: inline-flex;
+            font-size: 11px;
+            height: 22px;
+            justify-content: center;
+            margin-top: 1px;
+            position: relative;
+            width: 22px;
+            z-index: 1;
         }
 
         .activity-item p {
@@ -1050,9 +1186,9 @@
         .activity-time {
             color: var(--text-muted);
             display: block;
-            font-size: 13px;
-            margin-top: 8px;
-            text-align: right;
+            font-size: 12px;
+            margin-top: 3px;
+            text-align: left;
         }
 
         .action-row {
@@ -1179,6 +1315,7 @@
 
         @media (max-width: 1280px) {
             .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+            .dash-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .right-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
@@ -1198,6 +1335,8 @@
             .portal-content { padding: 16px; }
             .dash-stat-grid,
             .right-rail { grid-template-columns: 1fr; }
+            .profile-name,
+            .role-chip span { display: none; }
             .marketplace-item { grid-template-columns: 1fr; }
             .bonus-bar {
                 align-items: flex-start;
@@ -1214,6 +1353,8 @@
     $isPublisher = $currentAccount?->type === 'publisher';
     $isAdmin = $currentAccount?->type === 'admin';
     $isAgency = $currentAccount?->type === 'agency';
+    $roleLabel = $isAdmin ? 'Admin' : ($isAgency ? 'Agency' : ($isPublisher ? 'Publisher' : 'Advertiser'));
+    $roleIcon = $isAdmin ? 'fa-solid fa-shield-halved' : ($isAgency ? 'fa-solid fa-briefcase' : ($isPublisher ? 'fa-solid fa-globe' : 'fa-solid fa-bullhorn'));
 @endphp
 <body class="portal-body">
     <div class="portal-shell">
@@ -1264,7 +1405,7 @@
 
         <div class="portal-main">
             <header class="portal-topbar">
-                <span class="portal-icon-btn" title="Theme"><i class="fa-solid fa-moon"></i></span>
+                <button class="portal-icon-btn" type="button" title="Toggle theme" aria-label="Toggle dark mode" aria-pressed="false" data-theme-toggle><i class="fa-solid fa-moon"></i></button>
                 <span class="portal-icon-btn" title="Messages"><i class="fa-solid fa-envelope"></i></span>
                 @if ($isAdmin)
                     <a class="top-add-funds" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Review</a>
@@ -1278,7 +1419,11 @@
                 <span class="top-wallet blue">{{ $currentAccount?->wallet?->formattedBalance() ?? '$0.00' }} <i class="fa-solid fa-wallet"></i></span>
                 <span class="top-wallet sky">${{ number_format(($currentAccount?->wallet?->pending_balance_cents ?? 0) / 100, 2) }} <i class="fa-solid fa-file-invoice-dollar"></i></span>
                 <span class="top-wallet green">$0.00 <i class="fa-solid fa-coins"></i></span>
-                <span class="portal-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                <span class="role-chip"><i class="{{ $roleIcon }}"></i><span>{{ $roleLabel }}</span></span>
+                <span class="profile-chip">
+                    <span class="portal-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                    <span class="profile-name">{{ auth()->user()->name }}</span>
+                </span>
             </header>
 
             <main class="portal-content @yield('mainClass', '')">
@@ -1299,6 +1444,43 @@
         </div>
     @endunless
     <a class="chat-fab" href="#" aria-label="Open chat"><i class="fa-solid fa-comment"></i></a>
+    <script>
+        (() => {
+            const body = document.body;
+            const toggle = document.querySelector('[data-theme-toggle]');
+            const icon = toggle ? toggle.querySelector('i') : null;
+            const storageKey = 'mcv.portal.theme';
+
+            const applyTheme = (theme) => {
+                body.dataset.theme = theme;
+                try {
+                    localStorage.setItem(storageKey, theme);
+                } catch (error) {
+                    // Theme should still work even if storage is unavailable.
+                }
+                if (icon) {
+                    icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
+                if (toggle) {
+                    toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+                }
+            };
+
+            let savedTheme = 'light';
+            try {
+                savedTheme = localStorage.getItem(storageKey) || 'light';
+            } catch (error) {
+                savedTheme = 'light';
+            }
+
+            applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    applyTheme(body.dataset.theme === 'dark' ? 'light' : 'dark');
+                });
+            }
+        })();
+    </script>
 </body>
 @else
 <body data-nav="">

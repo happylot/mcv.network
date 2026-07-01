@@ -88,7 +88,7 @@
                 </div>
             @else
                 <div class="table-wrap">
-                    <table class="website-table">
+                    <table class="website-table website-table--compact">
                         <thead>
                             <tr>
                                 <th>Website</th>
@@ -108,7 +108,7 @@
                                     <td>
                                         <span class="website-name">
                                             <span class="domain-dot blue">●</span>
-                                            {{ $website->domain }}
+                                            <span class="website-domain">{{ $website->domain }}</span>
                                         </span>
                                     </td>
                                     <td><span class="score-pill green">{{ $website->domain_rating }}</span></td>
