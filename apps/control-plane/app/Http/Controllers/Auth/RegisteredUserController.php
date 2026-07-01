@@ -22,7 +22,6 @@ class RegisteredUserController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'account_type' => ['sometimes', 'string', 'in:advertiser,publisher,agency'],
@@ -38,7 +37,7 @@ class RegisteredUserController extends Controller
             $account = Account::create([
                 'owner_user_id' => $user->id,
                 'type' => $validated['account_type'] ?? 'advertiser',
-                'name' => $validated['company_name'],
+                'name' => $validated['name'].' Account',
                 'status' => 'pending',
                 'currency' => 'USD',
             ]);

@@ -16,6 +16,13 @@ class GoogleAuthController extends Controller
 {
     public function redirect(): SymfonyRedirectResponse
     {
+        $accountType = request()->query('account_type');
+        if (in_array($accountType, ['advertiser', 'publisher', 'agency'], true)) {
+            request()->session()->put('google_account_type', $accountType);
+        } else {
+            request()->session()->forget('google_account_type');
+        }
+
         return Socialite::driver('google')
             ->scopes(['openid', 'profile', 'email'])
             ->redirect();
@@ -24,8 +31,9 @@ class GoogleAuthController extends Controller
     public function callback(): RedirectResponse
     {
         $googleUser = Socialite::driver('google')->user();
+        $accountType = request()->session()->pull('google_account_type', 'advertiser');
 
-        $user = DB::transaction(function () use ($googleUser): User {
+        $user = DB::transaction(function () use ($googleUser, $accountType): User {
             $user = User::where('google_id', $googleUser->getId())
                 ->orWhere('email', $googleUser->getEmail())
                 ->first();
@@ -37,7 +45,7 @@ class GoogleAuthController extends Controller
                     'email_verified_at' => $user->email_verified_at ?? now(),
                 ])->save();
 
-                $this->ensureAdvertiserAccount($user);
+                $this->ensureAccount($user, $accountType);
 
                 return $user;
             }
@@ -51,7 +59,7 @@ class GoogleAuthController extends Controller
                 'email_verified_at' => now(),
             ]);
 
-            $this->ensureAdvertiserAccount($user);
+            $this->ensureAccount($user, $accountType);
 
             return $user;
         });
@@ -62,24 +70,19 @@ class GoogleAuthController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
-    private function ensureAdvertiserAccount(User $user): void
+    private function ensureAccount(User $user, string $accountType): void
     {
         if ($user->currentAccount()) {
             return;
         }
 
-        $companyName = Str::of($user->email)
-            ->after('@')
-            ->beforeLast('.')
-            ->replace(['.', '-', '_'], ' ')
-            ->title()
-            ->append(' Ads')
-            ->toString();
+        $accountName = ($user->name ?: Str::before($user->email, '@')).' Account';
+        $accountType = in_array($accountType, ['advertiser', 'publisher', 'agency'], true) ? $accountType : 'advertiser';
 
         $account = Account::create([
             'owner_user_id' => $user->id,
-            'type' => 'advertiser',
-            'name' => $companyName,
+            'type' => $accountType,
+            'name' => $accountName,
             'status' => 'pending',
             'currency' => 'USD',
         ]);

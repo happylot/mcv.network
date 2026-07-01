@@ -19,25 +19,29 @@
             <h1>Create your account</h1>
             <p class="sub">Start advertising on the open web in minutes.</p>
 
-            <a class="btn google-btn" href="{{ route('auth.google.redirect') }}">
+            <div class="form-field">
+                <label for="account_type">I am a...</label>
+                <select id="account_type" name="account_type" form="register-form" data-google-account-type>
+                    <option value="advertiser" @selected(old('account_type', 'advertiser') === 'advertiser')>Advertiser</option>
+                    <option value="publisher" @selected(old('account_type') === 'publisher')>Publisher</option>
+                    <option value="agency" @selected(old('account_type') === 'agency')>Agency</option>
+                </select>
+                @error('account_type') <div class="error">{{ $message }}</div> @enderror
+            </div>
+
+            <a class="btn google-btn" href="{{ route('auth.google.redirect') }}" data-google-signup-url="{{ route('auth.google.redirect') }}">
                 <span class="google-mark" aria-hidden="true">G</span>
                 Continue with Google
             </a>
 
             <div class="auth-divider">or</div>
 
-            <form method="POST" action="{{ route('register') }}">
+            <form id="register-form" method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-field">
                     <label for="name">Full name</label>
                     <input id="name" name="name" value="{{ old('name') }}" autocomplete="name" required>
                     @error('name') <div class="error">{{ $message }}</div> @enderror
-                </div>
-
-                <div class="form-field">
-                    <label for="company_name">Company name</label>
-                    <input id="company_name" name="company_name" value="{{ old('company_name') }}" required>
-                    @error('company_name') <div class="error">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="form-field">
@@ -57,20 +61,30 @@
                     <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" required>
                 </div>
 
-                <div class="form-field">
-                    <label for="account_type">I am a...</label>
-                    <select id="account_type" name="account_type">
-                        <option value="advertiser" @selected(old('account_type') === 'advertiser')>Advertiser</option>
-                        <option value="publisher" @selected(old('account_type') === 'publisher')>Publisher</option>
-                        <option value="agency" @selected(old('account_type') === 'agency')>Agency</option>
-                    </select>
-                    @error('account_type') <div class="error">{{ $message }}</div> @enderror
-                </div>
-
                 <button class="btn btn-primary" type="submit">Create Account <span aria-hidden="true">→</span></button>
             </form>
 
             <p class="auth-alt">Already have an account? <a href="{{ route('login') }}">Log in</a></p>
         </div>
     </div>
+
+    <script>
+        (() => {
+            const roleSelect = document.querySelector('[data-google-account-type]');
+            const googleLink = document.querySelector('[data-google-signup-url]');
+
+            if (!roleSelect || !googleLink) {
+                return;
+            }
+
+            const updateGoogleRole = () => {
+                const url = new URL(googleLink.dataset.googleSignupUrl, window.location.origin);
+                url.searchParams.set('account_type', roleSelect.value);
+                googleLink.href = url.toString();
+            };
+
+            roleSelect.addEventListener('change', updateGoogleRole);
+            updateGoogleRole();
+        })();
+    </script>
 @endsection

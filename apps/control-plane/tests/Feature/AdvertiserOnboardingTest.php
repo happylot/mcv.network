@@ -15,10 +15,10 @@ class AdvertiserOnboardingTest extends TestCase
     {
         $response = $this->post('/register', [
             'name' => 'Minh Nguyen',
-            'company_name' => 'Softel Ads',
             'email' => 'minh@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
+            'account_type' => 'advertiser',
         ]);
 
         $response->assertRedirect('/dashboard');
@@ -28,6 +28,7 @@ class AdvertiserOnboardingTest extends TestCase
         $account = Account::where('owner_user_id', $user->id)->firstOrFail();
 
         $this->assertSame('advertiser', $account->type);
+        $this->assertSame('Minh Nguyen Account', $account->name);
         $this->assertSame('pending', $account->status);
         $this->assertDatabaseHas('account_user', [
             'account_id' => $account->id,

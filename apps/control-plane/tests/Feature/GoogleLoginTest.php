@@ -49,7 +49,8 @@ class GoogleLoginTest extends TestCase
         $socialite->shouldReceive('driver')->once()->with('google')->andReturn($provider);
         $this->app->instance(SocialiteFactory::class, $socialite);
 
-        $response = $this->get('/auth/google/callback');
+        $response = $this->withSession(['google_account_type' => 'publisher'])
+            ->get('/auth/google/callback');
 
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticated();
@@ -60,7 +61,8 @@ class GoogleLoginTest extends TestCase
         $this->assertNotNull($user->email_verified_at);
         $this->assertDatabaseHas('accounts', [
             'owner_user_id' => $user->id,
-            'type' => 'advertiser',
+            'type' => 'publisher',
+            'name' => 'Mai Nguyen Account',
             'status' => 'pending',
             'currency' => 'USD',
         ]);
