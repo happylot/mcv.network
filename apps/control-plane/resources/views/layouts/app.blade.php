@@ -566,11 +566,13 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            padding: 0;
         }
 
         .portal-shell {
             display: grid;
             grid-template-columns: 268px minmax(0, 1fr);
+            margin: 0;
             min-height: 100vh;
         }
 
@@ -579,6 +581,7 @@
             border-right: 1px solid var(--border-light);
             color: var(--text-secondary);
             min-height: 100vh;
+            margin: 0;
             padding: 0 14px 24px;
             position: sticky;
             top: 0;
@@ -587,20 +590,20 @@
         .portal-logo {
             align-items: center;
             border-bottom: 1px solid var(--border-light);
-            color: var(--mcv-navy-dark);
+            color: var(--text-primary);
             display: flex;
             font-family: var(--font-heading);
             font-size: 18px;
             font-weight: 900;
             gap: 10px;
-            height: 58px;
+            height: 50px;
             letter-spacing: 0;
             margin-bottom: 14px;
         }
 
         .portal-logo-mark {
             align-items: center;
-            background: var(--mcv-navy-dark);
+            background: var(--mcv-navy);
             border-radius: 8px;
             display: inline-flex;
             height: 30px;
@@ -652,6 +655,7 @@
             background: var(--bg-light);
             display: flex;
             flex-direction: column;
+            margin: 0;
             min-width: 0;
         }
 
@@ -662,7 +666,7 @@
             color: var(--text-secondary);
             display: flex;
             gap: 12px;
-            height: 58px;
+            height: 50px;
             justify-content: flex-end;
             margin: 0;
             padding: 0 16px;
@@ -674,6 +678,18 @@
 
         .portal-body[data-theme="dark"] .portal-topbar {
             background: rgba(19,36,58,0.96);
+        }
+
+        .portal-body[data-theme="dark"] .portal-logo {
+            color: #F8FAFC;
+        }
+
+        .portal-body[data-theme="dark"] .portal-logo-mark {
+            background: #E7EEF8;
+        }
+
+        .portal-body[data-theme="dark"] .portal-logo-mark i {
+            color: var(--mcv-navy-dark);
         }
 
         .portal-icon-btn,
