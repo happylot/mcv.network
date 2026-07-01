@@ -495,7 +495,41 @@
         }
 
         .badge.pending { background: #fff4df; color: var(--warning); }
-        .badge.posted, .badge.succeeded, .badge.active { background: rgba(56,192,184,0.1); color: var(--success); }
+        .badge.pending_review { background: #fff4df; color: var(--warning); }
+        .badge.pending_publisher { background: #fff4df; color: var(--warning); }
+        .badge.submitted { background: rgba(32,72,152,0.08); color: var(--mcv-navy); }
+        .badge.posted, .badge.succeeded, .badge.active, .badge.completed { background: rgba(56,192,184,0.1); color: var(--success); }
+
+        .empty-state {
+            align-items: center;
+            color: var(--text-secondary);
+            display: grid;
+            justify-items: center;
+            min-height: 260px;
+            padding: 36px 18px;
+            text-align: center;
+        }
+
+        .empty-state i {
+            align-items: center;
+            background: rgba(56,192,184,0.12);
+            border-radius: 18px;
+            color: var(--mcv-teal);
+            display: inline-flex;
+            font-size: 30px;
+            height: 64px;
+            justify-content: center;
+            margin-bottom: 14px;
+            width: 64px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            max-width: 460px;
+        }
 
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
@@ -1006,6 +1040,73 @@
             text-align: right;
         }
 
+        .action-row {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .action-row form {
+            margin: 0;
+        }
+
+        .marketplace-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .marketplace-item {
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            display: grid;
+            gap: 20px;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+            padding: 18px;
+        }
+
+        .metric-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .metric-row span {
+            background: var(--bg-light);
+            border-radius: 999px;
+            color: var(--text-secondary);
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 800;
+            gap: 4px;
+            padding: 5px 10px;
+        }
+
+        .metric-row strong {
+            color: var(--mcv-navy);
+        }
+
+        .order-form {
+            background: #f8fbff;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+        }
+
+        .order-form textarea {
+            min-height: 72px;
+        }
+
+        .marketplace-price {
+            color: var(--mcv-navy);
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
         .bonus-bar {
             align-items: center;
             background: var(--mcv-navy-dark);
@@ -1082,6 +1183,7 @@
             .portal-content { padding: 16px; }
             .dash-stat-grid,
             .right-rail { grid-template-columns: 1fr; }
+            .marketplace-item { grid-template-columns: 1fr; }
             .bonus-bar {
                 align-items: flex-start;
                 flex-direction: column;
@@ -1092,6 +1194,11 @@
     </style>
 </head>
 @auth
+@php
+    $currentAccount = auth()->user()->currentAccount();
+    $isPublisher = $currentAccount?->type === 'publisher';
+    $isAdmin = $currentAccount?->type === 'admin';
+@endphp
 <body class="portal-body">
     <div class="portal-shell">
         <aside class="portal-sidebar">
@@ -1101,11 +1208,26 @@
             </a>
             <nav class="portal-nav" aria-label="Portal navigation">
                 <a class="{{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-                <a href="#"><i class="fa-solid fa-folder-plus"></i> All My Projects</a>
-                <a href="#"><i class="fa-solid fa-folder-open"></i> {{ auth()->user()->currentAccount()?->name ?? 'MCV Network' }}</a>
-                <a href="#"><i class="fa-solid fa-bullhorn"></i> Campaigns</a>
-                <a href="#"><i class="fa-solid fa-handshake-angle"></i> Affiliate Program</a>
-                <a class="{{ request()->routeIs('billing.*') ? 'active' : '' }}" href="{{ route('billing.index') }}"><i class="fa-solid fa-coins"></i> Add Funds</a>
+                @if ($isAdmin)
+                    <a class="{{ request()->routeIs('admin.publisher-websites.*') ? 'active' : '' }}" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Website Review</a>
+                    <a class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}"><i class="fa-solid fa-inbox"></i> Order Review</a>
+                    <a href="#"><i class="fa-solid fa-store"></i> Marketplace Ops</a>
+                    <a href="#"><i class="fa-solid fa-scale-balanced"></i> Disputes</a>
+                    <a href="#"><i class="fa-solid fa-money-check-dollar"></i> Payout Review</a>
+                @elseif ($isPublisher)
+                    <a class="{{ request()->routeIs('publisher.websites.*') ? 'active' : '' }}" href="{{ route('publisher.websites.index') }}"><i class="fa-solid fa-globe"></i> My Websites</a>
+                    <a href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-square-plus"></i> Add Website</a>
+                    <a class="{{ request()->routeIs('publisher.orders.*') ? 'active' : '' }}" href="{{ route('publisher.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
+                    <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Payouts</a>
+                @else
+                    <a class="{{ request()->routeIs('marketplace.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Marketplace</a>
+                    <a class="{{ request()->routeIs('marketplace.orders.*') ? 'active' : '' }}" href="{{ route('marketplace.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
+                    <a href="#"><i class="fa-solid fa-folder-plus"></i> All My Projects</a>
+                    <a href="#"><i class="fa-solid fa-folder-open"></i> {{ $currentAccount?->name ?? 'MCV Network' }}</a>
+                    <a href="#"><i class="fa-solid fa-bullhorn"></i> Campaigns</a>
+                    <a href="#"><i class="fa-solid fa-handshake-angle"></i> Affiliate Program</a>
+                    <a class="{{ request()->routeIs('billing.*') ? 'active' : '' }}" href="{{ route('billing.index') }}"><i class="fa-solid fa-coins"></i> Add Funds</a>
+                @endif
                 <a href="#"><i class="fa-solid fa-circle-question"></i> FAQ</a>
                 <a href="#"><i class="fa-solid fa-clock-rotate-left"></i> Activity Log</a>
                 <form method="POST" action="{{ route('logout') }}">
@@ -1119,9 +1241,15 @@
             <header class="portal-topbar">
                 <span class="portal-icon-btn" title="Theme"><i class="fa-solid fa-moon"></i></span>
                 <span class="portal-icon-btn" title="Messages"><i class="fa-solid fa-envelope"></i></span>
-                <a class="top-add-funds" href="{{ route('billing.index') }}"><i class="fa-solid fa-plus"></i> Add Funds</a>
-                <span class="top-wallet blue">{{ auth()->user()->currentAccount()?->wallet?->formattedBalance() ?? '$0.00' }} <i class="fa-solid fa-wallet"></i></span>
-                <span class="top-wallet sky">${{ number_format((auth()->user()->currentAccount()?->wallet?->pending_balance_cents ?? 0) / 100, 2) }} <i class="fa-solid fa-file-invoice-dollar"></i></span>
+                @if ($isAdmin)
+                    <a class="top-add-funds" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Review</a>
+                @elseif ($isPublisher)
+                    <a class="top-add-funds" href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-plus"></i> Add Website</a>
+                @else
+                    <a class="top-add-funds" href="{{ route('billing.index') }}"><i class="fa-solid fa-plus"></i> Add Funds</a>
+                @endif
+                <span class="top-wallet blue">{{ $currentAccount?->wallet?->formattedBalance() ?? '$0.00' }} <i class="fa-solid fa-wallet"></i></span>
+                <span class="top-wallet sky">${{ number_format(($currentAccount?->wallet?->pending_balance_cents ?? 0) / 100, 2) }} <i class="fa-solid fa-file-invoice-dollar"></i></span>
                 <span class="top-wallet green">$0.00 <i class="fa-solid fa-coins"></i></span>
                 <span class="portal-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
             </header>
@@ -1135,12 +1263,14 @@
             </main>
         </div>
     </div>
-    <div class="bonus-bar">
-        <span>🎁 Get <strong>100% Bonus Credit</strong> (Only On Your Next Deposit)</span>
-        <span>⏰ Expires in <span class="timer">05 h : 23 m : 33 s</span></span>
-        <span aria-hidden="true">→</span>
-        <a class="bonus-button" href="{{ route('billing.index') }}">Claim Your 100% Bonus</a>
-    </div>
+    @unless ($isPublisher || $isAdmin)
+        <div class="bonus-bar">
+            <span>🎁 Get <strong>100% Bonus Credit</strong> (Only On Your Next Deposit)</span>
+            <span>⏰ Expires in <span class="timer">05 h : 23 m : 33 s</span></span>
+            <span aria-hidden="true">→</span>
+            <a class="bonus-button" href="{{ route('billing.index') }}">Claim Your 100% Bonus</a>
+        </div>
+    @endunless
     <a class="chat-fab" href="#" aria-label="Open chat"><i class="fa-solid fa-comment"></i></a>
 </body>
 @else

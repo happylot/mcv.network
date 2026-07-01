@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\AdminGuestPostOrderController;
+use App\Http\Controllers\AdminPublisherWebsiteController;
+use App\Http\Controllers\AdvertiserGuestPostOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketingPageController;
+use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\PublisherGuestPostOrderController;
+use App\Http\Controllers\PublisherWebsiteController;
 use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +35,20 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/billing/top-up', [BillingController::class, 'store'])->name('billing.top-up.store');
     Route::get('/billing/stripe/success', [BillingController::class, 'stripeSuccess'])->name('billing.stripe.success');
     Route::get('/billing/stripe/cancel', [BillingController::class, 'stripeCancel'])->name('billing.stripe.cancel');
+    Route::get('/marketplace/websites', [MarketplaceController::class, 'index'])->name('marketplace.websites.index');
+    Route::post('/marketplace/websites/{website}/orders', [MarketplaceController::class, 'store'])->name('marketplace.orders.store');
+    Route::get('/marketplace/orders', [AdvertiserGuestPostOrderController::class, 'index'])->name('marketplace.orders.index');
+    Route::post('/marketplace/orders/{order}/approve', [AdvertiserGuestPostOrderController::class, 'approve'])->name('marketplace.orders.approve');
+    Route::get('/publisher/orders', [PublisherGuestPostOrderController::class, 'index'])->name('publisher.orders.index');
+    Route::post('/publisher/orders/{order}/submit', [PublisherGuestPostOrderController::class, 'submit'])->name('publisher.orders.submit');
+    Route::get('/publisher/websites', [PublisherWebsiteController::class, 'index'])->name('publisher.websites.index');
+    Route::get('/publisher/websites/create', [PublisherWebsiteController::class, 'create'])->name('publisher.websites.create');
+    Route::post('/publisher/websites', [PublisherWebsiteController::class, 'store'])->name('publisher.websites.store');
+    Route::get('/admin/publisher-websites', [AdminPublisherWebsiteController::class, 'index'])->name('admin.publisher-websites.index');
+    Route::post('/admin/publisher-websites/{website}/approve', [AdminPublisherWebsiteController::class, 'approve'])->name('admin.publisher-websites.approve');
+    Route::post('/admin/publisher-websites/{website}/reject', [AdminPublisherWebsiteController::class, 'reject'])->name('admin.publisher-websites.reject');
+    Route::get('/admin/orders', [AdminGuestPostOrderController::class, 'index'])->name('admin.orders.index');
+    Route::post('/admin/orders/{order}/approve', [AdminGuestPostOrderController::class, 'approve'])->name('admin.orders.approve');
 });
 
 Route::post('/stripe/webhook', StripeWebhookController::class)->name('stripe.webhook');

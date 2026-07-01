@@ -34,4 +34,34 @@ class Account extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function publisherWebsites(): HasMany
+    {
+        return $this->hasMany(PublisherWebsite::class);
+    }
+
+    public function guestPostOrdersAsAdvertiser(): HasMany
+    {
+        return $this->hasMany(GuestPostOrder::class, 'advertiser_account_id');
+    }
+
+    public function guestPostOrdersAsPublisher(): HasMany
+    {
+        return $this->hasMany(GuestPostOrder::class, 'publisher_account_id');
+    }
+
+    public function isPublisher(): bool
+    {
+        return $this->type === 'publisher';
+    }
+
+    public function isAdvertiser(): bool
+    {
+        return in_array($this->type, ['advertiser', 'agency'], true);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->type === 'admin';
+    }
 }
