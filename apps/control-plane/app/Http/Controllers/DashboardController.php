@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgencyService;
+use App\Models\AgencyServiceOrder;
 use App\Models\GuestPostOrder;
 use App\Models\PublisherWebsite;
 use Illuminate\Http\Request;
@@ -22,7 +24,20 @@ class DashboardController extends Controller
                 'pendingWebsiteCount' => PublisherWebsite::query()->where('status', 'pending_review')->count(),
                 'approvedWebsiteCount' => PublisherWebsite::query()->where('status', 'approved')->count(),
                 'openOrderCount' => GuestPostOrder::query()->whereIn('status', ['pending_publisher', 'submitted'])->count(),
+                'pendingServiceCount' => AgencyService::query()->where('status', 'pending_review')->count(),
+                'openServiceOrderCount' => AgencyServiceOrder::query()->whereIn('status', ['pending_agency', 'submitted'])->count(),
                 'recentWebsites' => PublisherWebsite::query()->with('account')->latest()->limit(8)->get(),
+            ]);
+        }
+
+        if ($account->isAgency()) {
+            $services = $account->agencyServices()->latest()->get();
+
+            return view('dashboard.agency', [
+                'account' => $account,
+                'wallet' => $account->wallet,
+                'services' => $services,
+                'openOrderCount' => $account->agencyServiceOrdersAsAgency()->whereIn('status', ['pending_agency', 'submitted'])->count(),
             ]);
         }
 

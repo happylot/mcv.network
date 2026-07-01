@@ -28,3 +28,16 @@ Publisher submits website
 3. Order is approved: publisher wallet is credited.
 
 This creates a simple escrow-like flow until a dedicated escrow ledger is added.
+
+## Agency Service Lifecycle
+
+```text
+Agency submits service
+  -> Admin approves service
+  -> Advertiser or publisher orders service
+  -> Agency submits delivery URL
+  -> Client or admin approves delivery
+  -> Agency payout is released
+```
+
+Agency services cover work such as SEO writing, logo design, video production, video editing, creative strategy, landing pages, and ads management.

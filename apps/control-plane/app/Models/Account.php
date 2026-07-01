@@ -50,6 +50,21 @@ class Account extends Model
         return $this->hasMany(GuestPostOrder::class, 'publisher_account_id');
     }
 
+    public function agencyServices(): HasMany
+    {
+        return $this->hasMany(AgencyService::class, 'agency_account_id');
+    }
+
+    public function agencyServiceOrdersAsClient(): HasMany
+    {
+        return $this->hasMany(AgencyServiceOrder::class, 'client_account_id');
+    }
+
+    public function agencyServiceOrdersAsAgency(): HasMany
+    {
+        return $this->hasMany(AgencyServiceOrder::class, 'agency_account_id');
+    }
+
     public function isPublisher(): bool
     {
         return $this->type === 'publisher';
@@ -57,7 +72,17 @@ class Account extends Model
 
     public function isAdvertiser(): bool
     {
-        return in_array($this->type, ['advertiser', 'agency'], true);
+        return $this->type === 'advertiser';
+    }
+
+    public function isAgency(): bool
+    {
+        return $this->type === 'agency';
+    }
+
+    public function canBuyAgencyServices(): bool
+    {
+        return in_array($this->type, ['advertiser', 'publisher'], true);
     }
 
     public function isAdmin(): bool

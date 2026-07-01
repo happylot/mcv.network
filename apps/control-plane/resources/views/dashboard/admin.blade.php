@@ -30,6 +30,22 @@
             </div>
             <a class="dash-card-link" href="{{ route('admin.orders.index') }}">Order operations →</a>
         </article>
+        <article class="dash-card dash-stat-card">
+            <span class="stat-icon purple"><i class="fa-solid fa-briefcase"></i></span>
+            <div>
+                <span class="dash-stat-label">Pending Services</span>
+                <strong class="dash-stat-value">{{ number_format($pendingServiceCount) }}</strong>
+            </div>
+            <a class="dash-card-link" href="{{ route('admin.agency-services.index') }}">Service review →</a>
+        </article>
+        <article class="dash-card dash-stat-card">
+            <span class="stat-icon sky"><i class="fa-solid fa-list-check"></i></span>
+            <div>
+                <span class="dash-stat-label">Open Service Orders</span>
+                <strong class="dash-stat-value">{{ number_format($openServiceOrderCount) }}</strong>
+            </div>
+            <a class="dash-card-link" href="{{ route('admin.agency-orders.index') }}">Service orders →</a>
+        </article>
     </section>
 
     <section class="dash-card">

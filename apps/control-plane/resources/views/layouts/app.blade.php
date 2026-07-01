@@ -20,20 +20,20 @@
             --text-primary: #1A2B4A;
             --text-secondary: #6B7C93;
             --text-muted: #8993A4;
-            --bg-light: #F4F6F8;
+            --bg-light: #F7F9FC;
             --bg-white: #FFFFFF;
-            --border-light: #E8ECF0;
-            --border: #DFE1E6;
+            --border-light: #DDE4F0;
+            --border: #CBD5E1;
             --gradient-primary: linear-gradient(135deg, #204898, #38C0B8);
             --gradient-dark: linear-gradient(135deg, #0D1B2E, #204898);
             --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --font-body: 'DM Sans', -apple-system, sans-serif;
             --radius-md: 8px;
             --radius-lg: 12px;
-            --radius-xl: 16px;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --radius-xl: 12px;
+            --shadow-sm: 0 1px 2px rgba(13,27,46,0.04);
+            --shadow-md: 0 1px 3px rgba(13,27,46,0.06);
+            --shadow-lg: 0 8px 24px rgba(13,27,46,0.08);
             --success: #1f9f7a;
             --warning: #b86a00;
         }
@@ -497,6 +497,7 @@
         .badge.pending { background: #fff4df; color: var(--warning); }
         .badge.pending_review { background: #fff4df; color: var(--warning); }
         .badge.pending_publisher { background: #fff4df; color: var(--warning); }
+        .badge.pending_agency { background: #fff4df; color: var(--warning); }
         .badge.submitted { background: rgba(32,72,152,0.08); color: var(--mcv-navy); }
         .badge.posted, .badge.succeeded, .badge.active, .badge.completed { background: rgba(56,192,184,0.1); color: var(--success); }
 
@@ -547,9 +548,7 @@
         }
 
         .portal-body {
-            background:
-                linear-gradient(180deg, #f8fbff 0%, var(--bg-light) 360px),
-                var(--bg-light);
+            background: var(--bg-light);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
@@ -557,38 +556,37 @@
 
         .portal-shell {
             display: grid;
-            grid-template-columns: 228px minmax(0, 1fr);
+            grid-template-columns: 268px minmax(0, 1fr);
             min-height: 100vh;
-            padding-bottom: 52px;
         }
 
         .portal-sidebar {
-            background: var(--mcv-navy-dark);
-            border-right: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.68);
+            background: #fff;
+            border-right: 1px solid var(--border-light);
+            color: var(--text-secondary);
             min-height: 100vh;
-            padding: 16px 16px 24px;
+            padding: 14px 14px 24px;
             position: sticky;
             top: 0;
         }
 
         .portal-logo {
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.16);
-            color: #fff;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--mcv-navy-dark);
             display: flex;
             font-family: var(--font-heading);
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 900;
             gap: 10px;
-            height: 54px;
+            height: 58px;
             letter-spacing: 0;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
         }
 
         .portal-logo-mark {
             align-items: center;
-            background: var(--gradient-primary);
+            background: var(--mcv-navy-dark);
             border-radius: 8px;
             display: inline-flex;
             height: 30px;
@@ -602,7 +600,7 @@
 
         .portal-nav {
             display: grid;
-            gap: 4px;
+            gap: 2px;
         }
 
         .portal-nav a,
@@ -610,16 +608,16 @@
             align-items: center;
             background: transparent;
             border: 0;
-            border-bottom: 1px solid rgba(255,255,255,0.14);
-            color: rgba(255,255,255,0.68);
+            border-radius: 8px;
+            color: var(--text-secondary);
             cursor: pointer;
             display: flex;
             font: inherit;
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 700;
             gap: 10px;
-            min-height: 36px;
-            padding: 8px 0;
+            min-height: 38px;
+            padding: 8px 10px;
             text-align: left;
             width: 100%;
         }
@@ -627,7 +625,8 @@
         .portal-nav a:hover,
         .portal-nav a.active,
         .portal-nav button:hover {
-            color: var(--mcv-teal-light);
+            background: rgba(32,72,152,0.07);
+            color: var(--mcv-navy);
         }
 
         .portal-nav i {
@@ -641,16 +640,18 @@
 
         .portal-topbar {
             align-items: center;
-            background: var(--gradient-dark);
-            color: #fff;
+            background: rgba(255,255,255,0.94);
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
             display: flex;
             gap: 12px;
-            height: 68px;
+            height: 58px;
             justify-content: flex-end;
             padding: 0 16px;
             position: sticky;
             top: 0;
             z-index: 30;
+            backdrop-filter: blur(12px);
         }
 
         .portal-icon-btn,
@@ -665,53 +666,60 @@
         }
 
         .portal-icon-btn {
-            background: rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.78);
+            background: var(--bg-light);
+            color: var(--text-secondary);
         }
 
         .portal-avatar {
-            background: #f2f6ff;
+            background: rgba(32,72,152,0.08);
             color: var(--mcv-navy);
             font-weight: 900;
         }
 
         .top-wallet {
             align-items: center;
-            border-radius: 5px;
-            color: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
+            color: var(--mcv-navy);
             display: inline-flex;
             font-weight: 900;
             gap: 8px;
-            height: 32px;
+            height: 34px;
             padding: 0 12px;
         }
 
-        .top-wallet.blue { background: var(--mcv-navy); }
-        .top-wallet.sky { background: var(--mcv-blue-light); }
-        .top-wallet.green { background: var(--mcv-teal); color: var(--mcv-navy-dark); }
+        .top-wallet.blue { background: rgba(32,72,152,0.06); }
+        .top-wallet.sky { background: rgba(45,107,196,0.06); color: var(--mcv-blue-light); }
+        .top-wallet.green { background: rgba(56,192,184,0.12); color: #18766f; }
 
         .top-add-funds {
             align-items: center;
-            background: var(--mcv-teal);
-            border-radius: 5px;
-            color: var(--mcv-navy-dark);
+            background: var(--mcv-navy);
+            border-radius: 8px;
+            color: #fff;
             display: inline-flex;
-            font-weight: 900;
+            font-weight: 800;
             gap: 8px;
             height: 34px;
             padding: 0 16px;
         }
 
+        .top-add-funds:hover {
+            background: var(--mcv-blue-light);
+            color: #fff;
+        }
+
         .portal-content {
-            padding: 18px 26px 32px;
+            padding: 24px 32px 48px;
         }
 
         .dashboard-crumb {
-            border-bottom: 1px solid #dfe5ef;
+            border-bottom: 1px solid var(--border-light);
             color: var(--mcv-navy);
-            font-size: 16px;
-            margin-bottom: 16px;
-            padding: 0 0 14px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding: 0 0 16px;
         }
 
         .dash-stat-grid {
@@ -724,11 +732,17 @@
         .dash-card {
             background: #fff;
             border: 1px solid var(--border-light);
-            border-radius: 10px;
-            box-shadow: var(--shadow-md);
+            border-radius: 8px;
+            box-shadow: none;
             min-width: 0;
             min-height: 150px;
             padding: 20px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .dash-card:hover {
+            border-color: rgba(32,72,152,0.24);
+            box-shadow: var(--shadow-sm);
         }
 
         .dash-stat-card {
@@ -740,9 +754,9 @@
 
         .stat-icon {
             align-items: center;
-            border-radius: 14px;
+            border-radius: 8px;
             display: inline-flex;
-            font-size: 24px;
+            font-size: 20px;
             height: 48px;
             justify-content: center;
             width: 48px;
@@ -808,7 +822,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 14px;
-            padding-bottom: 16px;
+            padding-bottom: 14px;
         }
 
         .dash-panel-header h2 {
@@ -830,7 +844,7 @@
             color: var(--text-secondary);
             font-size: 12px;
             letter-spacing: 0;
-            text-transform: none;
+            text-transform: uppercase;
         }
 
         .website-table td {
@@ -893,7 +907,7 @@
 
         .buy-btn {
             background: var(--mcv-navy);
-            border-radius: 4px;
+            border-radius: 8px;
             color: #fff;
             display: inline-flex;
             font-weight: 800;
@@ -916,16 +930,16 @@
         }
 
         .wallet-card {
-            background: var(--gradient-primary);
-            border: 0;
-            color: #fff;
+            background: #fff;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
             min-height: 150px;
             overflow: hidden;
             position: relative;
         }
 
         .wallet-card::after {
-            background: rgba(255,255,255,0.07);
+            background: rgba(56,192,184,0.12);
             border-radius: 44px;
             bottom: -42px;
             content: '';
@@ -937,7 +951,7 @@
         }
 
         .wallet-card h3 {
-            color: #fff;
+            color: var(--text-secondary);
             font-size: 13px;
             margin-bottom: 4px;
             position: relative;
@@ -966,8 +980,8 @@
         }
 
         .wallet-card .button {
-            background: rgba(255,255,255,0.92);
-            color: var(--mcv-navy);
+            background: var(--mcv-navy);
+            color: #fff;
             min-height: 30px;
             padding: 5px 12px;
             position: relative;
@@ -977,27 +991,28 @@
         .activity-card {
             background: #fff;
             border: 1px solid var(--border-light);
-            border-radius: 5px;
+            border-radius: 8px;
             overflow: hidden;
         }
 
         .activity-head {
             align-items: center;
-            background: var(--mcv-navy-dark);
-            color: #fff;
+            background: #fff;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
             display: flex;
             justify-content: space-between;
             padding: 16px 20px;
         }
 
         .activity-head h2 {
-            color: #fff;
+            color: var(--text-primary);
             font-size: 17px;
             margin: 0;
         }
 
         .activity-head a {
-            color: #fff;
+            color: var(--mcv-navy);
             font-size: 13px;
             font-weight: 800;
         }
@@ -1010,9 +1025,9 @@
 
         .activity-item {
             align-items: flex-start;
-            background: rgba(32,72,152,0.06);
-            border-radius: 5px;
-            box-shadow: inset 0 0 0 1px rgba(32,72,152,0.05);
+            background: var(--bg-light);
+            border-radius: 8px;
+            box-shadow: inset 0 0 0 1px var(--border-light);
             display: grid;
             gap: 10px;
             grid-template-columns: 26px 1fr;
@@ -1088,9 +1103,9 @@
         }
 
         .order-form {
-            background: #f8fbff;
+            background: var(--bg-light);
             border: 1px solid var(--border-light);
-            border-radius: var(--radius-lg);
+            border-radius: 8px;
             padding: 16px;
         }
 
@@ -1112,7 +1127,7 @@
             background: var(--mcv-navy-dark);
             bottom: 0;
             color: #fff;
-            display: flex;
+            display: none;
             font-size: 16px;
             gap: 10px;
             justify-content: center;
@@ -1198,6 +1213,7 @@
     $currentAccount = auth()->user()->currentAccount();
     $isPublisher = $currentAccount?->type === 'publisher';
     $isAdmin = $currentAccount?->type === 'admin';
+    $isAgency = $currentAccount?->type === 'agency';
 @endphp
 <body class="portal-body">
     <div class="portal-shell">
@@ -1211,17 +1227,26 @@
                 @if ($isAdmin)
                     <a class="{{ request()->routeIs('admin.publisher-websites.*') ? 'active' : '' }}" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Website Review</a>
                     <a class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}"><i class="fa-solid fa-inbox"></i> Order Review</a>
+                    <a class="{{ request()->routeIs('admin.agency-services.*') ? 'active' : '' }}" href="{{ route('admin.agency-services.index') }}"><i class="fa-solid fa-briefcase"></i> Service Review</a>
+                    <a class="{{ request()->routeIs('admin.agency-orders.*') ? 'active' : '' }}" href="{{ route('admin.agency-orders.index') }}"><i class="fa-solid fa-list-check"></i> Service Orders</a>
                     <a href="#"><i class="fa-solid fa-store"></i> Marketplace Ops</a>
                     <a href="#"><i class="fa-solid fa-scale-balanced"></i> Disputes</a>
                     <a href="#"><i class="fa-solid fa-money-check-dollar"></i> Payout Review</a>
+                @elseif ($isAgency)
+                    <a class="{{ request()->routeIs('agency.services.*') ? 'active' : '' }}" href="{{ route('agency.services.index') }}"><i class="fa-solid fa-briefcase"></i> My Services</a>
+                    <a href="{{ route('agency.services.create') }}"><i class="fa-solid fa-square-plus"></i> Add Service</a>
+                    <a class="{{ request()->routeIs('agency.orders.*') ? 'active' : '' }}" href="{{ route('agency.orders.index') }}"><i class="fa-solid fa-inbox"></i> Service Orders</a>
+                    <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Payouts</a>
                 @elseif ($isPublisher)
                     <a class="{{ request()->routeIs('publisher.websites.*') ? 'active' : '' }}" href="{{ route('publisher.websites.index') }}"><i class="fa-solid fa-globe"></i> My Websites</a>
                     <a href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-square-plus"></i> Add Website</a>
                     <a class="{{ request()->routeIs('publisher.orders.*') ? 'active' : '' }}" href="{{ route('publisher.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
+                    <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
                     <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Payouts</a>
                 @else
                     <a class="{{ request()->routeIs('marketplace.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Marketplace</a>
                     <a class="{{ request()->routeIs('marketplace.orders.*') ? 'active' : '' }}" href="{{ route('marketplace.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
+                    <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
                     <a href="#"><i class="fa-solid fa-folder-plus"></i> All My Projects</a>
                     <a href="#"><i class="fa-solid fa-folder-open"></i> {{ $currentAccount?->name ?? 'MCV Network' }}</a>
                     <a href="#"><i class="fa-solid fa-bullhorn"></i> Campaigns</a>
@@ -1243,6 +1268,8 @@
                 <span class="portal-icon-btn" title="Messages"><i class="fa-solid fa-envelope"></i></span>
                 @if ($isAdmin)
                     <a class="top-add-funds" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Review</a>
+                @elseif ($isAgency)
+                    <a class="top-add-funds" href="{{ route('agency.services.create') }}"><i class="fa-solid fa-plus"></i> Add Service</a>
                 @elseif ($isPublisher)
                     <a class="top-add-funds" href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-plus"></i> Add Website</a>
                 @else

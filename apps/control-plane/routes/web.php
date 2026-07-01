@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\AdminAgencyServiceController;
+use App\Http\Controllers\AdminAgencyServiceOrderController;
 use App\Http\Controllers\AdminGuestPostOrderController;
 use App\Http\Controllers\AdminPublisherWebsiteController;
 use App\Http\Controllers\AdvertiserGuestPostOrderController;
+use App\Http\Controllers\AgencyClientOrderController;
+use App\Http\Controllers\AgencyMarketplaceController;
+use App\Http\Controllers\AgencyServiceController;
+use App\Http\Controllers\AgencyServiceOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -39,6 +45,15 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/marketplace/websites/{website}/orders', [MarketplaceController::class, 'store'])->name('marketplace.orders.store');
     Route::get('/marketplace/orders', [AdvertiserGuestPostOrderController::class, 'index'])->name('marketplace.orders.index');
     Route::post('/marketplace/orders/{order}/approve', [AdvertiserGuestPostOrderController::class, 'approve'])->name('marketplace.orders.approve');
+    Route::get('/services', [AgencyMarketplaceController::class, 'index'])->name('services.index');
+    Route::post('/services/{service}/orders', [AgencyMarketplaceController::class, 'store'])->name('services.orders.store');
+    Route::get('/services/orders', [AgencyClientOrderController::class, 'index'])->name('services.orders.index');
+    Route::post('/services/orders/{order}/approve', [AgencyClientOrderController::class, 'approve'])->name('services.orders.approve');
+    Route::get('/agency/services', [AgencyServiceController::class, 'index'])->name('agency.services.index');
+    Route::get('/agency/services/create', [AgencyServiceController::class, 'create'])->name('agency.services.create');
+    Route::post('/agency/services', [AgencyServiceController::class, 'store'])->name('agency.services.store');
+    Route::get('/agency/orders', [AgencyServiceOrderController::class, 'index'])->name('agency.orders.index');
+    Route::post('/agency/orders/{order}/submit', [AgencyServiceOrderController::class, 'submit'])->name('agency.orders.submit');
     Route::get('/publisher/orders', [PublisherGuestPostOrderController::class, 'index'])->name('publisher.orders.index');
     Route::post('/publisher/orders/{order}/submit', [PublisherGuestPostOrderController::class, 'submit'])->name('publisher.orders.submit');
     Route::get('/publisher/websites', [PublisherWebsiteController::class, 'index'])->name('publisher.websites.index');
@@ -49,6 +64,11 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/admin/publisher-websites/{website}/reject', [AdminPublisherWebsiteController::class, 'reject'])->name('admin.publisher-websites.reject');
     Route::get('/admin/orders', [AdminGuestPostOrderController::class, 'index'])->name('admin.orders.index');
     Route::post('/admin/orders/{order}/approve', [AdminGuestPostOrderController::class, 'approve'])->name('admin.orders.approve');
+    Route::get('/admin/agency-services', [AdminAgencyServiceController::class, 'index'])->name('admin.agency-services.index');
+    Route::post('/admin/agency-services/{service}/approve', [AdminAgencyServiceController::class, 'approve'])->name('admin.agency-services.approve');
+    Route::post('/admin/agency-services/{service}/reject', [AdminAgencyServiceController::class, 'reject'])->name('admin.agency-services.reject');
+    Route::get('/admin/agency-orders', [AdminAgencyServiceOrderController::class, 'index'])->name('admin.agency-orders.index');
+    Route::post('/admin/agency-orders/{order}/approve', [AdminAgencyServiceOrderController::class, 'approve'])->name('admin.agency-orders.approve');
 });
 
 Route::post('/stripe/webhook', StripeWebhookController::class)->name('stripe.webhook');

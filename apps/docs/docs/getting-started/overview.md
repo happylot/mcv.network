@@ -24,6 +24,8 @@ The portal currently supports:
 - Guest post purchase using wallet balance.
 - Publisher fulfillment by submitting a published URL.
 - Advertiser or admin approval to release publisher payout.
+- Agency service catalog for SEO writing, logo design, video production, and ads management.
+- Client purchase of agency services with wallet balance.
 
 ## Role Model
 
@@ -32,8 +34,8 @@ Role behavior is based on the current account `type`.
 | Account type | Main dashboard | Primary jobs |
 | --- | --- | --- |
 | `advertiser` | Advertiser dashboard | Top up wallet, buy guest posts, approve fulfillments |
-| `agency` | Advertiser dashboard | Same buying flow as advertiser |
 | `publisher` | Publisher dashboard | Submit websites, fulfill orders, receive payout |
+| `agency` | Agency dashboard | Publish service packages, fulfill service orders, receive payout |
 | `admin` | Admin dashboard | Approve websites, approve order fulfillment, operate marketplace |
 
 ## Documentation Workflow

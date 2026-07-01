@@ -11,8 +11,8 @@ Access is currently based on the current account type.
 | Type | Access |
 | --- | --- |
 | `advertiser` | Marketplace buying and billing |
-| `agency` | Marketplace buying and billing |
 | `publisher` | Website submissions and order fulfillment |
+| `agency` | Service catalog publishing and service order fulfillment |
 | `admin` | Review queues and marketplace operations |
 
 ## Live Role Updates
