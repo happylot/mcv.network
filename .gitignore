@@ -20,6 +20,11 @@ apps/control-plane/storage/*.key
 apps/control-plane/storage/logs/*.log
 apps/control-plane/.phpunit.result.cache
 
+# Docusaurus docs
+apps/docs/node_modules/
+apps/docs/build/
+apps/docs/.docusaurus/
+
 # OS/build/cache
 Thumbs.db
 *.log
