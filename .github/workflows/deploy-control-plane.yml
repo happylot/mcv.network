@@ -151,7 +151,9 @@ jobs:
              php -r \"\\\$path='.env'; \\\$env=file_get_contents(\\\$path); \\\$env=preg_replace('/^APP_ENV=.*/m', 'APP_ENV=production', \\\$env); \\\$env=preg_replace('/^APP_DEBUG=.*/m', 'APP_DEBUG=false', \\\$env); \\\$env=preg_replace('/^APP_URL=.*/m', 'APP_URL=https://ads.mcv.network', \\\$env); file_put_contents(\\\$path, \\\$env);\" && \
              if grep -q '^DB_CONNECTION=sqlite' .env; then touch database/database.sqlite; fi && \
              if [ \"\$(id -u)\" -eq 0 ]; then chown -R root:www-data . && chown -R www-data:www-data storage bootstrap/cache database; fi && \
-             chmod -R ug+rwX storage bootstrap/cache database && \
+             chmod ug+rwX storage bootstrap/cache database storage/app storage/framework storage/framework/cache storage/framework/sessions storage/framework/views storage/logs && \
+             find storage/app storage/framework/cache storage/framework/views storage/logs bootstrap/cache database -type d -exec chmod ug+rwx {} + && \
+             (find storage/app storage/framework/cache storage/framework/views storage/logs bootstrap/cache database -type f -exec chmod ug+rw {} + 2>/dev/null || true) && \
              php artisan migrate --force && \
              php artisan config:cache && \
              php artisan route:cache && \
