@@ -30,33 +30,14 @@ class DashboardController extends Controller
             ]);
         }
 
-        if ($account->isAgency()) {
-            $services = $account->agencyServices()->latest()->get();
-
-            return view('dashboard.agency', [
-                'account' => $account,
-                'wallet' => $account->wallet,
-                'services' => $services,
-                'openOrderCount' => $account->agencyServiceOrdersAsAgency()->whereIn('status', ['pending_agency', 'submitted'])->count(),
-            ]);
-        }
-
-        if ($account->isPublisher()) {
-            $websites = $account->publisherWebsites()->latest()->get();
-
-            return view('dashboard.publisher', [
-                'account' => $account,
-                'wallet' => $account->wallet,
-                'recentEntries' => $account->wallet?->ledgerEntries ?? collect(),
-                'websites' => $websites,
-                'openOrderCount' => $account->guestPostOrdersAsPublisher()->whereIn('status', ['pending_publisher', 'submitted'])->count(),
-            ]);
-        }
-
         return view('dashboard.show', [
             'account' => $account,
             'wallet' => $account->wallet,
             'recentEntries' => $account->wallet?->ledgerEntries ?? collect(),
+            'publisherWebsiteCount' => $account->publisherWebsites()->count(),
+            'agencyServiceCount' => $account->agencyServices()->count(),
+            'publisherOpenOrderCount' => $account->guestPostOrdersAsPublisher()->whereIn('status', ['pending_publisher', 'submitted'])->count(),
+            'agencyOpenOrderCount' => $account->agencyServiceOrdersAsAgency()->whereIn('status', ['pending_agency', 'submitted'])->count(),
         ]);
     }
 }

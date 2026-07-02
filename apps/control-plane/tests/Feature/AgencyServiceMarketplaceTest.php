@@ -151,6 +151,9 @@ class AgencyServiceMarketplaceTest extends TestCase
         $account = Account::create([
             'owner_user_id' => $user->id,
             'type' => $type,
+            'can_buy' => true,
+            'can_sell_inventory' => $type === 'publisher',
+            'can_sell_services' => $type === 'agency',
             'name' => $accountName,
             'status' => 'active',
             'currency' => 'USD',

@@ -28,6 +28,9 @@ class AdvertiserOnboardingTest extends TestCase
         $account = Account::where('owner_user_id', $user->id)->firstOrFail();
 
         $this->assertSame('advertiser', $account->type);
+        $this->assertTrue($account->canBuy());
+        $this->assertFalse($account->canSellInventory());
+        $this->assertFalse($account->canSellServices());
         $this->assertSame('Minh Nguyen Account', $account->name);
         $this->assertSame('pending', $account->status);
         $this->assertDatabaseHas('account_user', [
@@ -54,6 +57,7 @@ class AdvertiserOnboardingTest extends TestCase
         $account = Account::create([
             'owner_user_id' => $user->id,
             'type' => 'advertiser',
+            'can_buy' => true,
             'name' => 'Lan Media',
             'status' => 'pending',
             'currency' => 'USD',
@@ -101,6 +105,7 @@ class AdvertiserOnboardingTest extends TestCase
         $account = Account::create([
             'owner_user_id' => $user->id,
             'type' => 'advertiser',
+            'can_buy' => true,
             'name' => 'Mai Growth',
             'status' => 'pending',
             'currency' => 'USD',

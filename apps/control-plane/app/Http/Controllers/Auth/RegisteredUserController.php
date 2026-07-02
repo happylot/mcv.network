@@ -37,6 +37,9 @@ class RegisteredUserController extends Controller
             $account = Account::create([
                 'owner_user_id' => $user->id,
                 'type' => $validated['account_type'] ?? 'advertiser',
+                'can_buy' => true,
+                'can_sell_inventory' => ($validated['account_type'] ?? 'advertiser') === 'publisher',
+                'can_sell_services' => ($validated['account_type'] ?? 'advertiser') === 'agency',
                 'name' => $validated['name'].' Account',
                 'status' => 'pending',
                 'currency' => 'USD',

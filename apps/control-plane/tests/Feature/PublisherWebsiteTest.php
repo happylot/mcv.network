@@ -66,15 +66,27 @@ class PublisherWebsiteTest extends TestCase
         ])->assertForbidden();
     }
 
-    public function test_publisher_dashboard_uses_publisher_view(): void
+    public function test_advertiser_can_enable_publisher_capability(): void
+    {
+        [$user, $account] = $this->advertiserUser();
+
+        $this->actingAs($user)
+            ->post(route('account.capabilities.store'), ['capability' => 'sell_inventory'])
+            ->assertRedirect();
+
+        $this->assertTrue($account->refresh()->canSellInventory());
+        $this->actingAs($user)->get('/publisher/websites')->assertOk();
+    }
+
+    public function test_publisher_dashboard_uses_unified_capability_view(): void
     {
         [$user] = $this->publisherUser();
 
         $this->actingAs($user)
             ->get('/dashboard')
             ->assertOk()
-            ->assertSee('Publisher Dashboard')
-            ->assertSee('Your Guest Post Inventory');
+            ->assertSee('Sell Inventory')
+            ->assertSee('Manage Websites');
     }
 
     private function publisherUser(): array
@@ -98,6 +110,9 @@ class PublisherWebsiteTest extends TestCase
         $account = Account::create([
             'owner_user_id' => $user->id,
             'type' => $type,
+            'can_buy' => true,
+            'can_sell_inventory' => $type === 'publisher',
+            'can_sell_services' => $type === 'agency',
             'name' => $accountName,
             'status' => 'pending',
             'currency' => 'USD',

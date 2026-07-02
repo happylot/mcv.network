@@ -89,6 +89,51 @@
         </article>
     </section>
 
+    <section class="capability-grid" aria-label="Account capabilities">
+        <article class="dash-card capability-card">
+            <span class="capability-status enabled"><i class="fa-solid fa-circle-check"></i> Enabled</span>
+            <h3><i class="fa-solid fa-cart-shopping"></i> Buy</h3>
+            <p>Order guest posts, hire services, and manage marketplace purchases from the same wallet.</p>
+            <a class="button" href="{{ route('marketplace.websites.index') }}">Browse Marketplace</a>
+        </article>
+
+        <article class="dash-card capability-card">
+            <span class="capability-status {{ $account->canSellInventory() ? 'enabled' : 'locked' }}">
+                <i class="fa-solid {{ $account->canSellInventory() ? 'fa-circle-check' : 'fa-circle-plus' }}"></i>
+                {{ $account->canSellInventory() ? 'Enabled' : 'Available' }}
+            </span>
+            <h3><i class="fa-solid fa-globe"></i> Sell Inventory</h3>
+            <p>{{ $account->canSellInventory() ? number_format($publisherWebsiteCount).' website listings, '.number_format($publisherOpenOrderCount).' open orders.' : 'List websites and guest post placements after enabling publisher capability.' }}</p>
+            @if ($account->canSellInventory())
+                <a class="button" href="{{ route('publisher.websites.index') }}">Manage Websites</a>
+            @else
+                <form method="POST" action="{{ route('account.capabilities.store') }}">
+                    @csrf
+                    <input type="hidden" name="capability" value="sell_inventory">
+                    <button class="button" type="submit">Become Publisher</button>
+                </form>
+            @endif
+        </article>
+
+        <article class="dash-card capability-card">
+            <span class="capability-status {{ $account->canSellServices() ? 'enabled' : 'locked' }}">
+                <i class="fa-solid {{ $account->canSellServices() ? 'fa-circle-check' : 'fa-circle-plus' }}"></i>
+                {{ $account->canSellServices() ? 'Enabled' : 'Available' }}
+            </span>
+            <h3><i class="fa-solid fa-briefcase"></i> Sell Services</h3>
+            <p>{{ $account->canSellServices() ? number_format($agencyServiceCount).' service listings, '.number_format($agencyOpenOrderCount).' open orders.' : 'Create service packages for SEO, design, video, and ads management.' }}</p>
+            @if ($account->canSellServices())
+                <a class="button" href="{{ route('agency.services.index') }}">Manage Services</a>
+            @else
+                <form method="POST" action="{{ route('account.capabilities.store') }}">
+                    @csrf
+                    <input type="hidden" name="capability" value="sell_services">
+                    <button class="button" type="submit">Sell Services</button>
+                </form>
+            @endif
+        </article>
+    </section>
+
     <section class="dashboard-grid">
         <div class="dash-card">
             <div class="dash-panel-header">

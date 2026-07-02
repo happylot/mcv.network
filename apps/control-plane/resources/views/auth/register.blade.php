@@ -4,27 +4,27 @@
 
 @section('content')
     <div class="auth-side">
-        <h2>Reach. Convert. Grow.</h2>
-        <p>Join thousands of advertisers growing on the open web.</p>
+        <h2>Buy, sell, or do both.</h2>
+        <p>Start with one marketplace mode today, then enable more capabilities whenever your workflow grows.</p>
         <ul class="checklist">
-            <li>600M+ daily active users</li>
-            <li>AI targeting &amp; first-party data</li>
-            <li>Real-time ROAS reporting</li>
-            <li>Start from just $100</li>
+            <li>Buy guest posts and creative services</li>
+            <li>Sell publisher inventory after review</li>
+            <li>Sell agency services and receive orders</li>
+            <li>One wallet, one dashboard, multiple capabilities</li>
         </ul>
     </div>
 
     <div class="auth-form">
         <div class="auth-form-inner">
             <h1>Create your account</h1>
-            <p class="sub">Start advertising on the open web in minutes.</p>
+            <p class="sub">Choose your starting intent. You can enable more capabilities later.</p>
 
             <div class="form-field">
-                <label for="account_type">I am a...</label>
+                <label for="account_type">I want to start as...</label>
                 <select id="account_type" name="account_type" form="register-form" data-google-account-type>
-                    <option value="advertiser" @selected(old('account_type', request('account_type', 'advertiser')) === 'advertiser')>Advertiser</option>
-                    <option value="publisher" @selected(old('account_type', request('account_type')) === 'publisher')>Publisher</option>
-                    <option value="agency" @selected(old('account_type', request('account_type')) === 'agency')>Agency</option>
+                    <option value="advertiser" @selected(old('account_type', request('account_type', 'advertiser')) === 'advertiser')>Buyer / Advertiser</option>
+                    <option value="publisher" @selected(old('account_type', request('account_type')) === 'publisher')>Publisher / Inventory seller</option>
+                    <option value="agency" @selected(old('account_type', request('account_type')) === 'agency')>Agency / Service seller</option>
                 </select>
                 @error('account_type') <div class="error">{{ $message }}</div> @enderror
             </div>

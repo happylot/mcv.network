@@ -107,7 +107,7 @@ class MarketplaceController extends Controller
     {
         $account = $request->user()->currentAccount()?->load('wallet');
 
-        abort_if(! $account || ! $account->isAdvertiser(), 403);
+        abort_if(! $account || ! $account->canBuy(), 403);
 
         return $account;
     }

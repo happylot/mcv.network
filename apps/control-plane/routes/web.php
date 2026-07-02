@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminAgencyServiceOrderController;
 use App\Http\Controllers\AdminGuestPostOrderController;
 use App\Http\Controllers\AdminPublisherWebsiteController;
 use App\Http\Controllers\AdvertiserGuestPostOrderController;
+use App\Http\Controllers\AccountCapabilityController;
 use App\Http\Controllers\AgencyClientOrderController;
 use App\Http\Controllers\AgencyMarketplaceController;
 use App\Http\Controllers\AgencyServiceController;
@@ -43,6 +44,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('/account/capabilities', [AccountCapabilityController::class, 'store'])->name('account.capabilities.store');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/top-up', [BillingController::class, 'store'])->name('billing.top-up.store');

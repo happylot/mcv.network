@@ -82,6 +82,9 @@ class GoogleAuthController extends Controller
         $account = Account::create([
             'owner_user_id' => $user->id,
             'type' => $accountType,
+            'can_buy' => true,
+            'can_sell_inventory' => $accountType === 'publisher',
+            'can_sell_services' => $accountType === 'agency',
             'name' => $accountName,
             'status' => 'pending',
             'currency' => 'USD',

@@ -62,6 +62,9 @@ class GoogleLoginTest extends TestCase
         $this->assertDatabaseHas('accounts', [
             'owner_user_id' => $user->id,
             'type' => 'publisher',
+            'can_buy' => true,
+            'can_sell_inventory' => true,
+            'can_sell_services' => false,
             'name' => 'Mai Nguyen Account',
             'status' => 'pending',
             'currency' => 'USD',

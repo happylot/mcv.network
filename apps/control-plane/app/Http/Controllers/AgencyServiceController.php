@@ -55,7 +55,7 @@ class AgencyServiceController extends Controller
     {
         $account = $request->user()->currentAccount();
 
-        abort_if(! $account || ! $account->isAgency(), 403);
+        abort_if(! $account || ! $account->canSellServices(), 403);
 
         return $account;
     }

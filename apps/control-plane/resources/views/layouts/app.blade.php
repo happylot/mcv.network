@@ -894,6 +894,54 @@
             min-width: 0;
         }
 
+        .capability-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 0 0 26px;
+        }
+
+        .capability-card {
+            align-content: space-between;
+            display: grid;
+            gap: 12px;
+            min-height: 168px;
+        }
+
+        .capability-card h3 {
+            align-items: center;
+            display: flex;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .capability-card p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .capability-status {
+            align-items: center;
+            border-radius: 999px;
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 900;
+            gap: 7px;
+            justify-self: start;
+            padding: 6px 10px;
+        }
+
+        .capability-status.enabled {
+            background: rgba(56,192,184,0.12);
+            color: #16867f;
+        }
+
+        .capability-status.locked {
+            background: #eef3fb;
+            color: var(--text-secondary);
+        }
+
         .dash-panel-header {
             align-items: center;
             border-bottom: 1px solid var(--border-light);
@@ -1331,6 +1379,7 @@
 
         @media (max-width: 1280px) {
             .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+            .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .dash-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .right-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
@@ -1349,6 +1398,7 @@
                 padding: 12px;
             }
             .portal-content { padding: 16px; }
+            .capability-grid,
             .dash-stat-grid,
             .right-rail { grid-template-columns: 1fr; }
             .profile-name,
@@ -1366,11 +1416,15 @@
 @auth
 @php
     $currentAccount = auth()->user()->currentAccount();
-    $isPublisher = $currentAccount?->type === 'publisher';
-    $isAdmin = $currentAccount?->type === 'admin';
-    $isAgency = $currentAccount?->type === 'agency';
-    $roleLabel = $isAdmin ? 'Admin' : ($isAgency ? 'Agency' : ($isPublisher ? 'Publisher' : 'Advertiser'));
-    $roleIcon = $isAdmin ? 'fa-solid fa-shield-halved' : ($isAgency ? 'fa-solid fa-briefcase' : ($isPublisher ? 'fa-solid fa-globe' : 'fa-solid fa-bullhorn'));
+    $isAdmin = $currentAccount?->isAdmin() ?? false;
+    $canBuy = $currentAccount?->canBuy() ?? false;
+    $canSellInventory = $currentAccount?->canSellInventory() ?? false;
+    $canSellServices = $currentAccount?->canSellServices() ?? false;
+    $capabilityLabels = $isAdmin ? ['Admin'] : ($currentAccount?->capabilityLabels() ?? ['Buyer']);
+    $roleLabel = implode(' + ', $capabilityLabels);
+    $roleIcon = $isAdmin
+        ? 'fa-solid fa-shield-halved'
+        : (count($capabilityLabels) > 1 ? 'fa-solid fa-layer-group' : ($canSellServices ? 'fa-solid fa-briefcase' : ($canSellInventory ? 'fa-solid fa-globe' : 'fa-solid fa-cart-shopping')));
 @endphp
 <body class="portal-body">
     <div class="portal-shell">
@@ -1389,21 +1443,34 @@
                     <a href="#"><i class="fa-solid fa-store"></i> Marketplace Ops</a>
                     <a href="#"><i class="fa-solid fa-scale-balanced"></i> Disputes</a>
                     <a href="#"><i class="fa-solid fa-money-check-dollar"></i> Payout Review</a>
-                @elseif ($isAgency)
-                    <a class="{{ request()->routeIs('agency.services.*') ? 'active' : '' }}" href="{{ route('agency.services.index') }}"><i class="fa-solid fa-briefcase"></i> My Services</a>
-                    <a href="{{ route('agency.services.create') }}"><i class="fa-solid fa-square-plus"></i> Add Service</a>
-                    <a class="{{ request()->routeIs('agency.orders.*') ? 'active' : '' }}" href="{{ route('agency.orders.index') }}"><i class="fa-solid fa-inbox"></i> Service Orders</a>
-                    <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Payouts</a>
-                @elseif ($isPublisher)
-                    <a class="{{ request()->routeIs('publisher.websites.*') ? 'active' : '' }}" href="{{ route('publisher.websites.index') }}"><i class="fa-solid fa-globe"></i> My Websites</a>
-                    <a href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-square-plus"></i> Add Website</a>
-                    <a class="{{ request()->routeIs('publisher.orders.*') ? 'active' : '' }}" href="{{ route('publisher.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
-                    <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
-                    <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Payouts</a>
                 @else
-                    <a class="{{ request()->routeIs('marketplace.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Marketplace</a>
-                    <a class="{{ request()->routeIs('marketplace.orders.*') ? 'active' : '' }}" href="{{ route('marketplace.orders.index') }}"><i class="fa-solid fa-inbox"></i> Guest Post Orders</a>
-                    <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
+                    @if ($canBuy)
+                        <a class="{{ request()->routeIs('marketplace.websites.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Buy Guest Posts</a>
+                        <a class="{{ request()->routeIs('marketplace.orders.*') ? 'active' : '' }}" href="{{ route('marketplace.orders.index') }}"><i class="fa-solid fa-inbox"></i> Bought Orders</a>
+                        <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
+                    @endif
+                    @if ($canSellInventory)
+                        <a class="{{ request()->routeIs('publisher.websites.*') ? 'active' : '' }}" href="{{ route('publisher.websites.index') }}"><i class="fa-solid fa-globe"></i> My Websites</a>
+                        <a href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-square-plus"></i> Add Website</a>
+                        <a class="{{ request()->routeIs('publisher.orders.*') ? 'active' : '' }}" href="{{ route('publisher.orders.index') }}"><i class="fa-solid fa-upload"></i> Sold Guest Posts</a>
+                    @else
+                        <form method="POST" action="{{ route('account.capabilities.store') }}">
+                            @csrf
+                            <input type="hidden" name="capability" value="sell_inventory">
+                            <button type="submit"><i class="fa-solid fa-toggle-on"></i> Become Publisher</button>
+                        </form>
+                    @endif
+                    @if ($canSellServices)
+                        <a class="{{ request()->routeIs('agency.services.*') ? 'active' : '' }}" href="{{ route('agency.services.index') }}"><i class="fa-solid fa-briefcase"></i> My Services</a>
+                        <a href="{{ route('agency.services.create') }}"><i class="fa-solid fa-square-plus"></i> Add Service</a>
+                        <a class="{{ request()->routeIs('agency.orders.*') ? 'active' : '' }}" href="{{ route('agency.orders.index') }}"><i class="fa-solid fa-list-check"></i> Service Orders</a>
+                    @else
+                        <form method="POST" action="{{ route('account.capabilities.store') }}">
+                            @csrf
+                            <input type="hidden" name="capability" value="sell_services">
+                            <button type="submit"><i class="fa-solid fa-toggle-on"></i> Sell Services</button>
+                        </form>
+                    @endif
                     <a href="#"><i class="fa-solid fa-folder-plus"></i> All My Projects</a>
                     <a href="#"><i class="fa-solid fa-folder-open"></i> {{ $currentAccount?->name ?? 'MCV Network' }}</a>
                     <a href="#"><i class="fa-solid fa-bullhorn"></i> Campaigns</a>
@@ -1425,9 +1492,9 @@
                 <span class="portal-icon-btn" title="Messages"><i class="fa-solid fa-envelope"></i></span>
                 @if ($isAdmin)
                     <a class="top-add-funds" href="{{ route('admin.publisher-websites.index') }}"><i class="fa-solid fa-shield-halved"></i> Review</a>
-                @elseif ($isAgency)
+                @elseif ($canSellServices && ! $canBuy && ! $canSellInventory)
                     <a class="top-add-funds" href="{{ route('agency.services.create') }}"><i class="fa-solid fa-plus"></i> Add Service</a>
-                @elseif ($isPublisher)
+                @elseif ($canSellInventory && ! $canBuy && ! $canSellServices)
                     <a class="top-add-funds" href="{{ route('publisher.websites.create') }}"><i class="fa-solid fa-plus"></i> Add Website</a>
                 @else
                     <a class="top-add-funds" href="{{ route('billing.index') }}"><i class="fa-solid fa-plus"></i> Add Funds</a>
@@ -1451,7 +1518,7 @@
             </main>
         </div>
     </div>
-    @unless ($isPublisher || $isAdmin)
+    @unless (! $canBuy || $isAdmin)
         <div class="bonus-bar">
             <span>🎁 Get <strong>100% Bonus Credit</strong> (Only On Your Next Deposit)</span>
             <span>⏰ Expires in <span class="timer">05 h : 23 m : 33 s</span></span>

@@ -10,10 +10,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['owner_user_id', 'type', 'name', 'status', 'currency'])]
+#[Fillable(['owner_user_id', 'type', 'can_buy', 'can_sell_inventory', 'can_sell_services', 'name', 'status', 'currency'])]
 class Account extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'can_buy' => 'boolean',
+        'can_sell_inventory' => 'boolean',
+        'can_sell_services' => 'boolean',
+    ];
 
     public function owner(): BelongsTo
     {
@@ -67,26 +73,60 @@ class Account extends Model
 
     public function isPublisher(): bool
     {
-        return $this->type === 'publisher';
+        return $this->canSellInventory();
     }
 
     public function isAdvertiser(): bool
     {
-        return $this->type === 'advertiser';
+        return $this->canBuy();
     }
 
     public function isAgency(): bool
     {
-        return $this->type === 'agency';
+        return $this->canSellServices();
     }
 
     public function canBuyAgencyServices(): bool
     {
-        return in_array($this->type, ['advertiser', 'publisher'], true);
+        return $this->canBuy();
     }
 
     public function isAdmin(): bool
     {
         return $this->type === 'admin';
+    }
+
+    public function canBuy(): bool
+    {
+        return $this->isAdmin() || $this->can_buy;
+    }
+
+    public function canSellInventory(): bool
+    {
+        return $this->isAdmin() || $this->can_sell_inventory;
+    }
+
+    public function canSellServices(): bool
+    {
+        return $this->isAdmin() || $this->can_sell_services;
+    }
+
+    public function capabilityLabels(): array
+    {
+        $labels = [];
+
+        if ($this->canBuy()) {
+            $labels[] = 'Buyer';
+        }
+
+        if ($this->canSellInventory()) {
+            $labels[] = 'Publisher';
+        }
+
+        if ($this->canSellServices()) {
+            $labels[] = 'Agency';
+        }
+
+        return $labels;
     }
 }

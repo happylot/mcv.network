@@ -82,7 +82,7 @@ class PublisherWebsiteController extends Controller
     {
         $account = $request->user()->currentAccount()?->load('wallet');
 
-        abort_if(! $account || ! $account->isPublisher(), 403);
+        abort_if(! $account || ! $account->canSellInventory(), 403);
 
         return $account;
     }
