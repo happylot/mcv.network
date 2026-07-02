@@ -19,9 +19,16 @@ use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\PublisherGuestPostOrderController;
 use App\Http\Controllers\PublisherWebsiteController;
 use App\Http\Controllers\StripeWebhookController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', MarketingPageController::class)->name('marketing.home');
+Route::get('/', function (Request $request) {
+    if ($request->getHost() === 'ads.mcv.network') {
+        return redirect()->route(auth()->check() ? 'dashboard' : 'login');
+    }
+
+    return app(MarketingPageController::class)($request);
+})->name('marketing.home');
 
 Route::middleware('guest')->group(function (): void {
     Route::redirect('/register', '/signup');
@@ -73,6 +80,12 @@ Route::middleware('auth')->group(function (): void {
 
 Route::post('/stripe/webhook', StripeWebhookController::class)->name('stripe.webhook');
 
-Route::get('/{path}', MarketingPageController::class)
+Route::get('/{path}', function (Request $request, string $path) {
+    if ($request->getHost() === 'ads.mcv.network') {
+        return redirect()->route(auth()->check() ? 'dashboard' : 'login');
+    }
+
+    return app(MarketingPageController::class)($request, $path);
+})
     ->where('path', '.*')
     ->name('marketing.page');
