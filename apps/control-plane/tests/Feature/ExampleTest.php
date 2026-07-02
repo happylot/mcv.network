@@ -16,6 +16,9 @@ class ExampleTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSee('Performance Advertising', false);
+            ->assertSee('Ba vai trò. Một sàn giao dịch. Không trung gian thừa.', false)
+            ->assertSee('account_type=advertiser', false)
+            ->assertSee('account_type=publisher', false)
+            ->assertSee('account_type=agency', false);
     }
 }
