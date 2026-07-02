@@ -71,6 +71,11 @@ class Account extends Model
         return $this->hasMany(AgencyServiceOrder::class, 'agency_account_id');
     }
 
+    public function buyRequests(): HasMany
+    {
+        return $this->hasMany(BuyRequest::class);
+    }
+
     public function isPublisher(): bool
     {
         return $this->canSellInventory();

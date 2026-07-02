@@ -1271,6 +1271,56 @@
             gap: 16px;
         }
 
+        .marketplace-hero-card {
+            align-items: center;
+            background: linear-gradient(135deg, rgba(32,72,152,0.08), rgba(56,192,184,0.12));
+            border: 1px solid rgba(32,72,152,0.1);
+            border-radius: var(--radius-lg);
+            display: flex;
+            gap: 24px;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding: 24px;
+        }
+
+        .marketplace-hero-card h1 {
+            font-size: 28px;
+            margin: 10px 0 4px;
+        }
+
+        .marketplace-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .marketplace-filter-card {
+            margin-bottom: 18px;
+        }
+
+        .marketplace-filters {
+            align-items: end;
+            display: grid;
+            gap: 14px;
+            grid-template-columns: 1fr 1fr 1fr auto;
+        }
+
+        .marketplace-board {
+            display: grid;
+            gap: 22px;
+            grid-template-columns: minmax(0, 1fr) 320px;
+        }
+
+        .marketplace-main-column,
+        .buy-request-column {
+            min-width: 0;
+        }
+
+        .marketplace-board-head {
+            margin: 0 0 14px;
+        }
+
         .marketplace-item {
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
@@ -1278,6 +1328,58 @@
             gap: 20px;
             grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
             padding: 18px;
+        }
+
+        .unified-listing-card {
+            background: #fff;
+        }
+
+        .listing-main {
+            display: grid;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .listing-title-row {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .listing-kind {
+            align-items: center;
+            border-radius: 999px;
+            display: inline-flex;
+            font-size: 12px;
+            font-weight: 900;
+            gap: 7px;
+            padding: 6px 10px;
+        }
+
+        .listing-kind.publisher {
+            background: rgba(56,192,184,0.12);
+            color: #16867f;
+        }
+
+        .listing-kind.agency {
+            background: rgba(255,167,38,0.16);
+            color: #9a5c00;
+        }
+
+        .listing-kind.buyer {
+            background: rgba(32,72,152,0.1);
+            color: var(--mcv-navy);
+        }
+
+        .listing-action-panel {
+            align-self: stretch;
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            display: grid;
+            gap: 12px;
+            padding: 14px;
         }
 
         .metric-row {
@@ -1313,6 +1415,18 @@
             min-height: 72px;
         }
 
+        .compact-order-form {
+            display: grid;
+            gap: 10px;
+            padding: 0;
+            background: transparent;
+            border: 0;
+        }
+
+        .compact-order-form textarea {
+            min-height: 86px;
+        }
+
         .marketplace-price {
             color: var(--mcv-navy);
             display: block;
@@ -1320,6 +1434,33 @@
             font-size: 28px;
             font-weight: 900;
             margin-bottom: 12px;
+        }
+
+        .buy-request-card {
+            background: #fff;
+            border: 1px dashed rgba(32,72,152,0.25);
+            border-radius: var(--radius-lg);
+            display: grid;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .buy-request-form {
+            border-style: solid;
+        }
+
+        .buy-request-form textarea {
+            min-height: 96px;
+        }
+
+        .buy-request-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .buy-request-card h3 {
+            margin: 0;
         }
 
         .bonus-bar {
@@ -1378,6 +1519,7 @@
         }
 
         @media (max-width: 1280px) {
+            .marketplace-board { grid-template-columns: 1fr; }
             .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
             .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .dash-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1398,6 +1540,12 @@
                 padding: 12px;
             }
             .portal-content { padding: 16px; }
+            .marketplace-hero-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .marketplace-hero-actions { justify-content: flex-start; }
+            .marketplace-filters { grid-template-columns: 1fr; }
             .capability-grid,
             .dash-stat-grid,
             .right-rail { grid-template-columns: 1fr; }
@@ -1445,7 +1593,7 @@
                     <a href="#"><i class="fa-solid fa-money-check-dollar"></i> Payout Review</a>
                 @else
                     @if ($canBuy)
-                        <a class="{{ request()->routeIs('marketplace.websites.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Buy Guest Posts</a>
+                        <a class="{{ request()->routeIs('marketplace.websites.*') ? 'active' : '' }}" href="{{ route('marketplace.websites.index') }}"><i class="fa-solid fa-store"></i> Marketplace</a>
                         <a class="{{ request()->routeIs('marketplace.orders.*') ? 'active' : '' }}" href="{{ route('marketplace.orders.index') }}"><i class="fa-solid fa-inbox"></i> Bought Orders</a>
                         <a class="{{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}"><i class="fa-solid fa-briefcase"></i> Hire Services</a>
                     @endif

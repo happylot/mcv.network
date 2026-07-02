@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Account;
+use App\Models\AgencyService;
 use App\Models\PublisherWebsite;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -98,6 +99,65 @@ class GuestPostMarketplaceTest extends TestCase
             'wallet_id' => $advertiserAccount->wallet->id,
             'type' => 'guest_post_order',
         ]);
+    }
+
+    public function test_marketplace_shows_guest_post_and_service_listings_to_any_account_capability(): void
+    {
+        [$viewer] = $this->userWithAccount('publisher', 'Publisher Buyer');
+        [, $publisherAccount] = $this->userWithAccount('publisher', 'Publisher Studio');
+        [, $agencyAccount] = $this->userWithAccount('agency', 'Creative Agency');
+
+        $website = $this->publisherWebsite($publisherAccount, [
+            'domain' => 'examplepublisher.com',
+            'status' => 'approved',
+        ]);
+        $service = AgencyService::create([
+            'agency_account_id' => $agencyAccount->id,
+            'title' => 'SEO article package',
+            'category' => 'SEO Writing',
+            'description' => 'One optimized article for a target keyword.',
+            'deliverables' => 'Draft, meta title, and revisions.',
+            'base_price_cents' => 15000,
+            'turnaround_days' => 5,
+            'status' => 'approved',
+        ]);
+
+        $this->actingAs($viewer)
+            ->get(route('marketplace.websites.index'))
+            ->assertOk()
+            ->assertSee('Listings for buyers and sellers')
+            ->assertSee($website->domain)
+            ->assertSee($service->title)
+            ->assertSee('Buy requests');
+    }
+
+    public function test_buyer_can_post_buy_request_visible_to_sellers(): void
+    {
+        [$buyerUser, $buyerAccount] = $this->userWithAccount('advertiser', 'Brand Buyer');
+        [$sellerUser] = $this->userWithAccount('agency', 'Creative Seller');
+
+        $this->actingAs($buyerUser)
+            ->post(route('marketplace.buy-requests.store'), [
+                'title' => 'Need five fintech guest posts',
+                'category' => 'Guest Post',
+                'budget' => '500.00',
+                'description' => 'Looking for finance websites with DR 50+ and English content.',
+            ])
+            ->assertRedirect(route('marketplace.websites.index', ['type' => 'buy_request']));
+
+        $this->assertDatabaseHas('buy_requests', [
+            'account_id' => $buyerAccount->id,
+            'title' => 'Need five fintech guest posts',
+            'category' => 'Guest Post',
+            'budget_cents' => 50000,
+            'status' => 'open',
+        ]);
+
+        $this->actingAs($sellerUser)
+            ->get(route('marketplace.websites.index', ['type' => 'buy_request']))
+            ->assertOk()
+            ->assertSee('Need five fintech guest posts')
+            ->assertSee('Respond to Brief');
     }
 
     private function publisherWebsite(Account $account, array $overrides = []): PublisherWebsite

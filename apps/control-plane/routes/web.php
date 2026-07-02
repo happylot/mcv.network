@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\BuyRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarketingPageController;
 use App\Http\Controllers\MarketplaceController;
@@ -51,6 +52,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/billing/stripe/success', [BillingController::class, 'stripeSuccess'])->name('billing.stripe.success');
     Route::get('/billing/stripe/cancel', [BillingController::class, 'stripeCancel'])->name('billing.stripe.cancel');
     Route::get('/marketplace/websites', [MarketplaceController::class, 'index'])->name('marketplace.websites.index');
+    Route::post('/marketplace/buy-requests', [BuyRequestController::class, 'store'])->name('marketplace.buy-requests.store');
     Route::post('/marketplace/websites/{website}/orders', [MarketplaceController::class, 'store'])->name('marketplace.orders.store');
     Route::get('/marketplace/orders', [AdvertiserGuestPostOrderController::class, 'index'])->name('marketplace.orders.index');
     Route::post('/marketplace/orders/{order}/approve', [AdvertiserGuestPostOrderController::class, 'approve'])->name('marketplace.orders.approve');
