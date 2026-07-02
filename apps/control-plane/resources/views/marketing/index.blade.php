@@ -1,72 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Performance Advertising at Scale — MCV Network</title>
-<meta name="description" content="MCV Network connects advertisers with millions of users across web &amp; apps. AI-powered targeting, first-party data, real-time measurement.">
+<title>MCV Network — Sàn giao dịch Advertiser, Publisher & Agency</title>
+<meta name="description" content="MCV Network là sàn giao dịch số nơi Advertiser mua traffic và dịch vụ sáng tạo, Publisher bán inventory đã đóng gói, Agency bán năng lực sáng tạo.">
 <link rel="icon" type="image/png" href="/logo_MCV_network.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="/assets/css/mcv.css">
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script></head>
+</head>
 <body data-nav="">
 <div id="mcv-nav"></div>
-<section class="hero">
-  <div class="hero-inner hero-split">
-    <div><span class="eyebrow">Performance Advertising</span><h1>Performance Advertising<br><span class="highlight">Beyond Walled Gardens</span></h1><p class="lead">Reach millions of users across a web &amp; app network you control. AI-powered targeting, first-party data, real-time measurement.</p><div class="hero-ctas"><a href="/advertisers/get-started/" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Start Advertising</a><a href="/advertisers/platform/" class="btn btn-outline"><i class="fa-solid fa-play"></i> See How It Works</a></div></div>
-    <div class="hero-visual"><div class="panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <div><div style="font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--text-secondary)">Campaign Performance</div>
-          <div style="font-family:var(--font-heading);font-size:24px;font-weight:800;color:var(--mcv-navy)">$12,450 <span style="font-size:13px;color:var(--mcv-teal);font-weight:600">&uarr; 34%</span></div></div>
-          <div class="pill teal">Live</div>
+
+<section class="market-hero">
+  <div class="market-hero-inner">
+    <div class="market-hero-copy">
+      <span class="eyebrow">Marketplace for ads, inventory & creative services</span>
+      <h1>Ba vai trò. Một sàn giao dịch. Không trung gian thừa.</h1>
+      <p class="lead">MCV Network là sàn giao dịch số nơi Advertiser mua traffic hiệu suất cao và dịch vụ sáng tạo, Publisher bán inventory đã đóng gói, và Agency bán năng lực sáng tạo như logo, pitch deck, video AI, tài khoản AI trên cùng một dashboard.</p>
+      <div class="persona-cta-row" aria-label="Choose your role">
+        <a href="https://ads.mcv.network/signup?account_type=advertiser" class="role-cta advertiser"><i class="fa-solid fa-bullhorn"></i><span>Tôi là Advertiser</span><strong>Bắt đầu chiến dịch</strong></a>
+        <a href="https://ads.mcv.network/signup?account_type=publisher" class="role-cta publisher"><i class="fa-solid fa-layer-group"></i><span>Tôi là Publisher</span><strong>Đăng bán Inventory</strong></a>
+        <a href="https://ads.mcv.network/signup?account_type=agency" class="role-cta agency"><i class="fa-solid fa-briefcase"></i><span>Tôi là Agency</span><strong>Đăng bán Dịch vụ</strong></a>
+      </div>
+    </div>
+
+    <div class="market-visual" aria-label="3D infographic showing Advertiser, Publisher and Agency connected through MCV Exchange">
+      <div class="market-3d-scene">
+        <div class="orbit-ring orbit-one"></div>
+        <div class="orbit-ring orbit-two"></div>
+        <div class="trade-flow flow-advertiser"></div>
+        <div class="trade-flow flow-publisher"></div>
+        <div class="trade-flow flow-agency"></div>
+
+        <div class="market-core-3d">
+          <div class="core-top">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Escrow</span>
+          </div>
+          <strong>MCV Exchange</strong>
+          <small>Order • Wallet • Review</small>
         </div>
-        <div id="hero-chart" style="height:220px"></div>
-      </div></div>
+
+        <div class="role-pillar pillar-advertiser">
+          <div class="pillar-icon"><i class="fa-solid fa-bullhorn"></i></div>
+          <span>Advertiser</span>
+          <strong>Budget</strong>
+        </div>
+        <div class="role-pillar pillar-publisher">
+          <div class="pillar-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <span>Publisher</span>
+          <strong>Inventory</strong>
+        </div>
+        <div class="role-pillar pillar-agency">
+          <div class="pillar-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <span>Agency</span>
+          <strong>Creative</strong>
+        </div>
+
+        <div class="floating-chip chip-one"><i class="fa-solid fa-chart-line"></i> ROAS</div>
+        <div class="floating-chip chip-two"><i class="fa-solid fa-gavel"></i> Auction</div>
+        <div class="floating-chip chip-three"><i class="fa-solid fa-star"></i> Rating</div>
+        <div class="market-base-shadow"></div>
+      </div>
+    </div>
   </div>
 </section>
-<div class="stats-bar"><div class="stats-inner"><div class="stat-item"><div class="stat-value">600M+</div><div class="stat-label">Daily Active Users</div></div><div class="stat-item"><div class="stat-value">14,000+</div><div class="stat-label">Digital Properties</div></div><div class="stat-item"><div class="stat-value">100B+</div><div class="stat-label">Recommendations/Mo</div></div><div class="stat-item"><div class="stat-value">679%</div><div class="stat-label">Average ROAS</div></div></div></div>
+
+<section class="persona-section">
+  <div class="section-inner">
+    <div class="persona-grid">
+      <article class="persona-card advertiser">
+        <div class="persona-icon"><i class="fa-solid fa-bullhorn"></i></div>
+        <h2>Advertiser</h2>
+        <h3>Mua traffic hiệu suất cao. Mua luôn dịch vụ sáng tạo đi kèm.</h3>
+        <ul class="checklist">
+          <li>Tiếp cận inventory từ Publisher đã xác thực.</li>
+          <li>Đặt hàng logo, pitch deck, video AI trực tiếp từ Agency.</li>
+          <li>Theo dõi ROAS, CPA, CTR real-time trên dashboard.</li>
+        </ul>
+        <a href="https://ads.mcv.network/signup?account_type=advertiser" class="btn btn-primary">Start a Campaign</a>
+      </article>
+      <article class="persona-card publisher">
+        <div class="persona-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <h2>Publisher</h2>
+        <h3>Đóng gói inventory. Bán trực tiếp, không qua trung gian.</h3>
+        <ul class="checklist">
+          <li>Niêm yết traffic, placement theo format, ngành hàng, target.</li>
+          <li>Matching tự động với Advertiser phù hợp.</li>
+          <li>Đối soát và thanh toán minh bạch trên dashboard.</li>
+        </ul>
+        <a href="https://ads.mcv.network/signup?account_type=publisher" class="btn btn-teal">List Your Inventory</a>
+      </article>
+      <article class="persona-card agency">
+        <div class="persona-icon"><i class="fa-solid fa-briefcase"></i></div>
+        <h2>Agency</h2>
+        <h3>Bán năng lực sáng tạo. Không chỉ quản lý chiến dịch.</h3>
+        <ul class="checklist">
+          <li>Đăng bán logo, pitch deck, video AI, content AI, tài khoản AI.</li>
+          <li>Vừa vận hành chiến dịch, vừa là seller dịch vụ trên sàn.</li>
+          <li>Xây profile năng lực, giá, portfolio và review công khai.</li>
+        </ul>
+        <a href="https://ads.mcv.network/signup?account_type=agency" class="btn btn-dark">List Your Services</a>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="section">
-  <div class="section-inner"><div class="section-header"><div class="section-tag">How It Works</div><h2>Reach. Convert. Grow.</h2><p>Three simple steps to scale performance campaigns on the open web.</p></div><div class="grid grid-3"><div class="card"><div class="card-num">01</div><div class="card-icon" style="background:var(--mcv-navy)"><i class="fa-solid fa-bullseye"></i></div><h3>Reach Your Audience</h3><p>AI matching finds the right users across the web &amp; app network — contextual targeting, lookalike audiences, first-party segments.</p></div><div class="card"><div class="card-num">02</div><div class="card-icon"><i class="fa-solid fa-arrows-rotate"></i></div><h3>Convert at Scale</h3><p>Native ads blend naturally with content. Performance AI optimizes in real time for conversions, leads and purchases — not just clicks.</p></div><div class="card"><div class="card-num">03</div><div class="card-icon" style="background:var(--mcv-teal)"><i class="fa-solid fa-chart-line"></i></div><h3>Grow Revenue</h3><p>Measure ROAS, CPA and LTV precisely. Auto-scale winning campaigns. Cut CPA an average 42% vs walled gardens.</p></div></div></div>
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">How it works</div>
+      <h2>Ba luồng giao dịch riêng, cùng một ví và một cơ chế bảo vệ.</h2>
+      <p>Advertiser, Publisher và Agency có workflow khác nhau nhưng được kết nối bằng order, escrow, review và settlement chung.</p>
+    </div>
+    <div class="workflow-grid">
+      <article class="workflow-card">
+        <h3><i class="fa-solid fa-bullhorn"></i> Advertiser</h3>
+        <ol>
+          <li>Tạo chiến dịch hoặc chọn dịch vụ cần mua.</li>
+          <li>Chọn Publisher inventory hoặc Agency service phù hợp.</li>
+          <li>Theo dõi hiệu suất và thanh toán qua dashboard.</li>
+        </ol>
+      </article>
+      <article class="workflow-card">
+        <h3><i class="fa-solid fa-globe"></i> Publisher</h3>
+        <ol>
+          <li>Đóng gói inventory theo định dạng chuẩn của sàn.</li>
+          <li>Niêm yết và chờ matching với Advertiser.</li>
+          <li>Nhận thanh toán theo đối soát tự động.</li>
+        </ol>
+      </article>
+      <article class="workflow-card">
+        <h3><i class="fa-solid fa-briefcase"></i> Agency</h3>
+        <ol>
+          <li>Tạo hồ sơ dịch vụ, giá, thời gian giao và portfolio.</li>
+          <li>Nhận đơn hàng trực tiếp từ Advertiser.</li>
+          <li>Giao sản phẩm và nhận thanh toán qua dashboard.</li>
+        </ol>
+      </article>
+    </div>
+  </div>
 </section>
+
+<div class="stats-bar marketplace-stats">
+  <div class="stats-inner role-stats">
+    <div class="stat-item"><div class="stat-role">Advertiser</div><div class="stat-value">679%</div><div class="stat-label">ROAS benchmark</div></div>
+    <div class="stat-item"><div class="stat-role">Advertiser</div><div class="stat-value">-42%</div><div class="stat-label">CPA benchmark</div></div>
+    <div class="stat-item"><div class="stat-role">Publisher</div><div class="stat-value">+X%</div><div class="stat-label">Revenue / 1,000 impressions</div></div>
+    <div class="stat-item"><div class="stat-role">Agency</div><div class="stat-value">TBD</div><div class="stat-label">Monthly service volume</div></div>
+  </div>
+</div>
+
 <section class="section alt">
-  <div class="section-inner"><div class="section-header"><div class="section-tag">Ad Formats</div><h2>Diverse Formats, Maximum Impact</h2><p>Ads render naturally across trusted media properties.</p></div><div class="grid grid-auto"><div class="tile"><div class="tile-icon">📰</div><h4>Native Widget</h4><p>Content recommendation cards — below article, in-feed</p></div><div class="tile"><div class="tile-icon">🛒</div><h4>Commerce Cards</h4><p>Shoppable product cards with price, rating, CTA</p></div><div class="tile"><div class="tile-icon">🎥</div><h4>Video Outstream</h4><p>Auto-play muted video, in-content placement</p></div><div class="tile"><div class="tile-icon">📱</div><h4>In-App Native</h4><p>Seamless mobile experience, rewarded &amp; interstitial</p></div><div class="tile"><div class="tile-icon">🖼️</div><h4>Display Banner</h4><p>IAB standard sizes — header, sidebar, sticky</p></div><div class="tile"><div class="tile-icon">⚡</div><h4>Dynamic Creative</h4><p>AI-generated headlines &amp; visuals, auto A/B tested</p></div></div></div>
+  <div class="section-inner">
+    <div class="section-header left">
+      <div class="section-tag">Marketplace categories</div>
+      <h2>Danh mục tài sản và dịch vụ được giao dịch.</h2>
+      <p>Advertiser có thể mua cả traffic/inventory lẫn dịch vụ sáng tạo mà không phải rời khỏi sàn.</p>
+    </div>
+    <div class="catalog-grid">
+      <article class="catalog-card">
+        <span class="catalog-label">From Publisher</span>
+        <h3>Inventory đã đóng gói</h3>
+        <div class="tag-cloud">
+          <span>Display</span><span>Native</span><span>Video Outstream</span><span>Push</span><span>Pop</span><span>Guest Post</span><span>Homepage link</span><span>Industry target</span>
+        </div>
+      </article>
+      <article class="catalog-card">
+        <span class="catalog-label agency">From Agency</span>
+        <h3>Dịch vụ & sức sáng tạo</h3>
+        <div class="tag-cloud">
+          <span>Logo design</span><span>Brand identity</span><span>Pitch deck</span><span>Sales deck</span><span>AI video</span><span>AI content</span><span>Ad management</span><span>AI accounts</span>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
+
 <section class="section">
-  <div class="section-inner"><div class="section-header"><div class="section-tag">Proven Results</div><h2>Advertisers Winning with MCV</h2><p>Average performance metrics across campaigns on the platform.</p></div><div class="grid grid-auto"><div class="metric"><div class="metric-value">679%</div><div class="metric-label">Average ROAS</div></div><div class="metric"><div class="metric-value">-42%</div><div class="metric-label">Cost per Sale</div></div><div class="metric"><div class="metric-value">+130%</div><div class="metric-label">Conversion Rate</div></div><div class="metric"><div class="metric-value">+50%</div><div class="metric-label">Click-Through Rate</div></div><div class="metric"><div class="metric-value">100K</div><div class="metric-label">Leads / Month</div></div><div class="metric"><div class="metric-value">2X</div><div class="metric-label">Session Duration</div></div></div></div>
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Trust by role</div>
+      <h2>Social proof cần rõ theo từng phía của sàn.</h2>
+      <p>Logo Advertiser hiện có thể hiển thị ngay; Publisher và Agency sẽ được cập nhật khi có danh sách đối tác xác nhận.</p>
+    </div>
+    <div class="trust-grid">
+      <article class="trust-card">
+        <h3>Advertiser tin dùng</h3>
+        <div class="logo-strip compact"><span>Yahoo</span><span>Samsung</span><span>NBC</span><span>Hyundai</span><span>eToro</span><span>Bosch</span></div>
+      </article>
+      <article class="trust-card">
+        <h3>Publisher đối tác</h3>
+        <p>Danh sách publisher sẽ được đồng bộ từ inventory đã được kiểm duyệt Brand Safety.</p>
+      </article>
+      <article class="trust-card">
+        <h3>Agency trên sàn</h3>
+        <p>Danh sách agency sẽ hiển thị theo review, rating và portfolio đã xác thực.</p>
+      </article>
+    </div>
+  </div>
 </section>
-<section class="section alt">
-  <div class="section-inner"><div class="section-header"><div class="section-tag">Technology</div><h2>AI-Powered Performance Engine</h2><p>17+ years of recommendation data, cookieless-ready, privacy-first.</p></div><div class="grid grid-2" style="gap:48px;align-items:center">
-        <div class="grid" style="gap:16px"><div class="grid grid-1"><div class="feature-row"><div class="fr-icon"><i class="fa-solid fa-brain"></i></div><div><h4>Predictive AI Targeting</h4><p>Deep-learning models predict user intent and optimize conversions in real time on every placement.</p></div></div><div class="feature-row"><div class="fr-icon"><i class="fa-solid fa-database"></i></div><div><h4>First-Party Data</h4><p>Signals straight from the ecosystem — browsing behavior, app usage, verified demographics.</p></div></div><div class="feature-row"><div class="fr-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h4>Brand Safety &amp;amp; Fraud Prevention</h4><p>ML-powered fraud detection, content classification, IVT filtering below 2%.</p></div></div><div class="feature-row"><div class="fr-icon"><i class="fa-solid fa-cookie-bite"></i></div><div><h4>Cookieless Ready</h4><p>Contextual AI + on-device signals + publisher first-party IDs. Built for what is next.</p></div></div></div></div>
-        <div><div id="tech-chart" style="height:320px;background:#fff;border-radius:var(--radius-xl);border:1px solid var(--border-light);padding:16px"></div></div>
-      </div></div>
+
+<section class="section dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Trading safety</div>
+      <h2>Cơ chế giao dịch & bảo mật</h2>
+      <p>MCV đóng vai trò marketplace và trọng tài giao dịch, không phải một bên mua bán.</p>
+    </div>
+    <div class="safety-grid">
+      <article class="safety-card"><i class="fa-solid fa-gavel"></i><h3>Auction & Quote</h3><p>Tài sản khan hiếm như tên miền, homepage link, website/app trọn gói được đấu giá công khai. Dịch vụ sáng tạo được Agency báo giá theo scope.</p></article>
+      <article class="safety-card"><i class="fa-solid fa-shield-halved"></i><h3>P2P + Escrow</h3><p>Tiền được giữ trong escrow đến khi Advertiser xác nhận nhận inventory hoặc dịch vụ, sau đó mới giải ngân cho Publisher hoặc Agency.</p></article>
+      <article class="safety-card"><i class="fa-solid fa-star-half-stroke"></i><h3>Quality verification</h3><p>Publisher inventory qua kiểm duyệt Brand Safety. Agency service được đánh giá công khai bằng review và rating từ Advertiser.</p></article>
+      <article class="safety-card"><i class="fa-solid fa-scale-balanced"></i><h3>Dispute resolution</h3><p>Giao dịch giá trị cao có thể áp dụng Smart Contract; tranh chấp được xử lý theo policy minh bạch với CSR và Compliance trung lập.</p></article>
+    </div>
+  </div>
 </section>
-<section class="section alt">
-  <div class="section-inner"><div class="text-center" style="margin-bottom:24px"><p class="muted" style="text-transform:uppercase;letter-spacing:0.05em;font-size:13px">Trusted by leading brands &amp; publishers</p></div><div class="logo-strip"><span>Yahoo</span><span>Samsung</span><span>NBC</span><span>Hyundai</span><span>eToro</span><span>Bosch</span></div></div>
+
+<section class="cta-band marketplace-cta">
+  <h2>Chọn vai trò của bạn và bắt đầu giao dịch.</h2>
+  <p>MCV Network kết nối traffic, inventory và năng lực sáng tạo trong một dashboard dành cho cả ba bên.</p>
+  <div class="hero-ctas" style="justify-content:center">
+    <a href="https://ads.mcv.network/signup?account_type=advertiser" class="btn btn-lg btn-teal">Advertiser</a>
+    <a href="https://ads.mcv.network/signup?account_type=publisher" class="btn btn-lg btn-outline">Publisher</a>
+    <a href="https://ads.mcv.network/signup?account_type=agency" class="btn btn-lg btn-outline">Agency</a>
+  </div>
 </section>
-<section class="cta-band"><h2>Ready to Grow?</h2><p>Start with $100 — no minimum budget. Setup in 5 minutes.</p><div class="hero-ctas" style="justify-content:center"><a href="/advertisers/get-started/" class="btn btn-lg btn-teal"><i class="fa-solid fa-rocket"></i> Start Your First Campaign</a></div></section>
+
 <div id="mcv-footer"></div>
 <script src="/assets/js/mcv.js"></script>
-<script>
-Highcharts.chart('hero-chart', {
-  chart: { type: 'areaspline', backgroundColor: 'transparent', height: 220, margin: [10,0,30,40] },
-  title: { text: null },
-  xAxis: { categories: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], labels:{style:{color:'#8993A4',fontSize:'10px'}}, lineColor:'#E8ECF0', tickColor:'#E8ECF0' },
-  yAxis: { title:{text:null}, labels:{format:'${value}',style:{color:'#8993A4',fontSize:'10px'}}, gridLineColor:'#F0F2F5' },
-  tooltip: { valuePrefix:'$' },
-  plotOptions: { areaspline:{ fillColor:{linearGradient:{x1:0,y1:0,x2:0,y2:1},stops:[[0,'rgba(56,192,184,0.2)'],[1,'rgba(56,192,184,0)']]}, lineWidth:3, marker:{radius:0} } },
-  series: [{ name:'Revenue', data:[1420,1680,1550,1890,2100,1950,2450], color:'#38C0B8' }],
-  legend:{enabled:false}, credits:{enabled:false}
-});
-Highcharts.chart('tech-chart', {
-  chart: { type:'column', backgroundColor:'transparent', style:{fontFamily:'Inter, sans-serif'} },
-  title: { text:'Performance vs Walled Gardens', style:{color:'#1A2B4A',fontSize:'14px',fontWeight:'700'} },
-  xAxis: { categories:['CPA','CTR','ROAS','Viewability'], labels:{style:{color:'#6B7C93',fontSize:'11px'}}, lineColor:'#E8ECF0' },
-  yAxis: { title:{text:null}, labels:{style:{color:'#6B7C93',fontSize:'10px'}}, gridLineColor:'#F0F2F5' },
-  plotOptions: { column:{ borderRadius:6, borderWidth:0 } },
-  series: [{ name:'MCV Network', data:[85,92,95,88], color:'#204898' }, { name:'Industry Avg', data:[55,60,50,65], color:'#E8ECF0' }],
-  legend: { align:'center', verticalAlign:'bottom', itemStyle:{color:'#6B7C93',fontSize:'11px'} },
-  credits:{enabled:false}
-});
-</script></body>
+</body>
 </html>

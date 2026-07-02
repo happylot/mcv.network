@@ -22,9 +22,9 @@
             <div class="form-field">
                 <label for="account_type">I am a...</label>
                 <select id="account_type" name="account_type" form="register-form" data-google-account-type>
-                    <option value="advertiser" @selected(old('account_type', 'advertiser') === 'advertiser')>Advertiser</option>
-                    <option value="publisher" @selected(old('account_type') === 'publisher')>Publisher</option>
-                    <option value="agency" @selected(old('account_type') === 'agency')>Agency</option>
+                    <option value="advertiser" @selected(old('account_type', request('account_type', 'advertiser')) === 'advertiser')>Advertiser</option>
+                    <option value="publisher" @selected(old('account_type', request('account_type')) === 'publisher')>Publisher</option>
+                    <option value="agency" @selected(old('account_type', request('account_type')) === 'agency')>Agency</option>
                 </select>
                 @error('account_type') <div class="error">{{ $message }}</div> @enderror
             </div>

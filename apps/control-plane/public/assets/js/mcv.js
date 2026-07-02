@@ -7,11 +7,10 @@
   var active = document.body.getAttribute('data-nav') || '';
 
   var navItems = [
-    { key: 'advertisers', label: 'Advertisers', href: '/advertisers/' },
-    { key: 'publishers', label: 'Publishers', href: '/publishers/' },
-    { key: 'commerce', label: 'Commerce', href: '/commerce/overview/' },
+    { key: 'advertisers', label: 'For Advertisers', href: '/advertisers/' },
+    { key: 'publishers', label: 'For Publishers', href: '/publishers/' },
+    { key: 'agencies', label: 'For Agencies', href: '/agencies/' },
     { key: 'technology', label: 'Technology', href: '/technology/ai-engine/' },
-    { key: 'solutions', label: 'Solutions', href: '/solutions/ecommerce/' },
     { key: 'resources', label: 'Resources', href: '/resources/blog/' },
     { key: 'company', label: 'Company', href: '/company/about/' }
   ];
@@ -43,7 +42,7 @@
         '<div class="footer-grid">' +
           '<div class="footer-brand">' +
             '<h3>MCV<span>.</span>Network</h3>' +
-            '<p>Performance advertising at scale. Reach. Convert. Grow. Beyond walled gardens.</p>' +
+            '<p>A three-sided marketplace for advertisers, publishers and agencies trading traffic, inventory and creative services.</p>' +
           '</div>' +
           '<div class="footer-col">' +
             '<h4>Advertisers</h4>' +
@@ -54,12 +53,20 @@
             '<a href="/advertisers/case-studies/">Case Studies</a>' +
           '</div>' +
           '<div class="footer-col">' +
-            '<h4>Solutions</h4>' +
-            '<a href="/solutions/ecommerce/">E-commerce</a>' +
-            '<a href="/solutions/finance/">Finance</a>' +
-            '<a href="/solutions/healthcare/">Healthcare</a>' +
-            '<a href="/solutions/apps/">App Developers</a>' +
-            '<a href="/solutions/enterprise/">Enterprise</a>' +
+            '<h4>Publishers</h4>' +
+            '<a href="/publishers/">Overview</a>' +
+            '<a href="/publishers/formats/">Inventory Formats</a>' +
+            '<a href="/publishers/monetization/">Monetization</a>' +
+            '<a href="/publishers/performance/">Performance</a>' +
+            '<a href="/publishers/apply/">Apply</a>' +
+          '</div>' +
+          '<div class="footer-col">' +
+            '<h4>Agencies</h4>' +
+            '<a href="/agencies/">Overview</a>' +
+            '<a href="https://ads.mcv.network/signup?account_type=agency">List Services</a>' +
+            '<a href="/solutions/agencies/">Agency Solutions</a>' +
+            '<a href="/resources/creative-gallery/">Creative Gallery</a>' +
+            '<a href="/company/contact/">Contact</a>' +
           '</div>' +
           '<div class="footer-col">' +
             '<h4>Resources</h4>' +
