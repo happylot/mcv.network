@@ -67,6 +67,60 @@
   </div>
 </section>
 
+<section id="all-listings" class="public-listings-section">
+  <div class="section-inner">
+    <div class="public-listings-head">
+      <div>
+        <div class="section-tag">Live marketplace</div>
+        <h2>All listings đang mở trên MCV Network.</h2>
+        <p>Người chưa đăng ký vẫn có thể xem nhanh nhu cầu mua và các offer bán từ Publisher, Agency trước khi vào portal.</p>
+      </div>
+      <a href="https://ads.mcv.network/signup" class="btn btn-primary">Join Marketplace</a>
+    </div>
+
+    <div class="public-listing-tabs" aria-label="Filter listings">
+      @foreach ([
+        'all' => ['label' => 'All', 'icon' => 'fa-solid fa-table-cells-large'],
+        'guest_post' => ['label' => 'Guest Posts', 'icon' => 'fa-solid fa-globe'],
+        'service' => ['label' => 'Services', 'icon' => 'fa-solid fa-briefcase'],
+        'buy_request' => ['label' => 'Buy Requests', 'icon' => 'fa-solid fa-bullhorn'],
+      ] as $group => $tab)
+        <a class="{{ $selectedPublicListingGroup === $group ? 'active' : '' }}" href="/?listing_group={{ $group }}#all-listings">
+          <i class="{{ $tab['icon'] }}"></i>
+          <span>{{ $tab['label'] }}</span>
+          <strong>{{ $publicMarketplaceCounts[$group] ?? 0 }}</strong>
+        </a>
+      @endforeach
+    </div>
+
+    <div class="public-listing-grid">
+      @forelse ($publicMarketplaceListings as $listing)
+        <article class="public-listing-card {{ $listing['type'] }}">
+          <div class="public-listing-top">
+            <span class="public-listing-kind"><i class="{{ $listing['icon'] }}"></i> {{ $listing['label'] }}</span>
+            @if ($listing['is_sample'])
+              <span class="sample-badge">Sample</span>
+            @endif
+          </div>
+          <h3>{{ $listing['title'] }}</h3>
+          <p class="public-listing-meta">{{ $listing['seller'] }} · {{ $listing['meta'] }}</p>
+          <p>{{ str($listing['description'])->limit(130) }}</p>
+          <div class="public-listing-bottom">
+            <strong>{{ $listing['price'] }}</strong>
+            <a href="https://ads.mcv.network/signup" aria-label="Open listing in portal">View in portal</a>
+          </div>
+        </article>
+      @empty
+        <div class="public-listing-empty">
+          <i class="fa-solid fa-store"></i>
+          <h3>Chưa có listing trong nhóm này.</h3>
+          <p>Hãy đăng ký để trở thành những người đầu tiên đăng offer hoặc buy request trên MCV Network.</p>
+        </div>
+      @endforelse
+    </div>
+  </div>
+</section>
+
 <section class="persona-section">
   <div class="section-inner">
     <div class="persona-grid">

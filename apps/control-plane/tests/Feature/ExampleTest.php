@@ -20,6 +20,7 @@ class ExampleTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Ba vai trò. Một sàn giao dịch. Không trung gian thừa.', false)
+            ->assertSee('All listings đang mở trên MCV Network.', false)
             ->assertSee('account_type=advertiser', false)
             ->assertSee('account_type=publisher', false)
             ->assertSee('account_type=agency', false);
