@@ -241,16 +241,39 @@ body { padding-top: 64px; }
   position: relative;
 }
 .market-hero-copy .eyebrow {
+  align-items: center;
   background: rgba(56,192,184,0.12);
   border-radius: 999px;
   color: #1c8d86;
-  display: inline-block;
+  display: inline-flex;
   font-size: 12px;
   font-weight: 800;
+  gap: 8px;
   letter-spacing: 0.05em;
   margin-bottom: 18px;
   padding: 6px 14px;
+  position: relative;
   text-transform: uppercase;
+}
+.market-hero-copy .eyebrow::before {
+  background: #20d489;
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px rgba(32,212,137,0.12);
+  content: "";
+  height: 8px;
+  width: 8px;
+}
+.market-hero-copy .eyebrow::after {
+  animation: liveDotRipple 1.8s ease-out infinite;
+  border: 1px solid rgba(32,212,137,0.55);
+  border-radius: 999px;
+  content: "";
+  height: 8px;
+  left: 14px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  width: 8px;
 }
 .market-hero h1 {
   color: var(--mcv-navy-dark);
@@ -532,6 +555,7 @@ body { padding-top: 64px; }
   color: var(--mcv-navy-dark);
 }
 .floating-chip {
+  animation: floatingChipPulse 3s ease-in-out infinite;
   align-items: center;
   background: rgba(255,255,255,0.9);
   border: 1px solid rgba(32,72,152,0.1);
@@ -549,16 +573,49 @@ body { padding-top: 64px; }
   color: var(--mcv-teal);
 }
 .chip-one {
+  animation-delay: 0s;
   left: 52px;
   top: 62px;
 }
 .chip-two {
+  animation-delay: 0.5s;
   right: 44px;
   top: 58px;
 }
 .chip-three {
+  animation-delay: 1s;
   bottom: 96px;
   right: 60px;
+}
+.chip-one,
+.chip-two,
+.chip-three {
+  will-change: transform, box-shadow;
+}
+@keyframes liveDotRipple {
+  0% {
+    opacity: 0.9;
+    transform: translateY(-50%) scale(1);
+  }
+  72%,
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(3.2);
+  }
+}
+@keyframes floatingChipPulse {
+  0%,
+  16%,
+  100% {
+    box-shadow: 0 14px 28px rgba(13,27,46,0.12);
+    color: var(--mcv-navy);
+    transform: translateY(0) scale(1);
+  }
+  8% {
+    box-shadow: 0 20px 38px rgba(32,72,152,0.22);
+    color: var(--mcv-navy-dark);
+    transform: translateY(-12px) scale(1.08);
+  }
 }
 .market-base-shadow {
   background: radial-gradient(ellipse, rgba(13,27,46,0.18), transparent 68%);
