@@ -36,19 +36,24 @@ class AgencyServiceController extends Controller
             'turnaround_days' => ['required', 'integer', 'min:1', 'max:90'],
         ]);
 
+        $priceCents = (int) round(((float) $validated['base_price']) * 100);
+        $isAutoApproved = $priceCents < 10000;
+
         $account->agencyServices()->create([
             'title' => $validated['title'],
             'category' => $validated['category'],
             'description' => $validated['description'],
             'deliverables' => $validated['deliverables'] ?? null,
-            'base_price_cents' => (int) round(((float) $validated['base_price']) * 100),
+            'base_price_cents' => $priceCents,
             'turnaround_days' => (int) $validated['turnaround_days'],
-            'status' => 'pending_review',
+            'status' => $isAutoApproved ? 'approved' : 'pending_review',
         ]);
 
         return redirect()
             ->route('agency.services.index')
-            ->with('status', 'Service submitted for admin review.');
+            ->with('status', $isAutoApproved
+                ? 'Service auto-approved and published to the marketplace.'
+                : 'Service submitted for admin review.');
     }
 
     private function agencyAccount(Request $request)

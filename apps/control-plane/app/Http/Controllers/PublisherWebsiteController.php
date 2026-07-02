@@ -57,6 +57,9 @@ class PublisherWebsiteController extends Controller
                 ->withInput();
         }
 
+        $priceCents = (int) round(((float) $validated['guest_post_price']) * 100);
+        $isAutoApproved = $priceCents < 10000;
+
         $account->publisherWebsites()->create([
             'domain' => $domain,
             'name' => $validated['name'] ?: Str::of($domain)->replace('www.', '')->title()->toString(),
@@ -66,16 +69,18 @@ class PublisherWebsiteController extends Controller
             'monthly_traffic' => (int) $validated['monthly_traffic'],
             'domain_rating' => (int) $validated['domain_rating'],
             'domain_authority' => (int) $validated['domain_authority'],
-            'guest_post_price_cents' => (int) round(((float) $validated['guest_post_price']) * 100),
+            'guest_post_price_cents' => $priceCents,
             'turnaround_days' => (int) $validated['turnaround_days'],
             'guidelines' => $validated['guidelines'] ?? null,
             'sample_url' => $validated['sample_url'] ?? null,
-            'status' => 'pending_review',
+            'status' => $isAutoApproved ? 'approved' : 'pending_review',
         ]);
 
         return redirect()
             ->route('publisher.websites.index')
-            ->with('status', 'Website submitted for review. It will appear in the marketplace after approval.');
+            ->with('status', $isAutoApproved
+                ? 'Website auto-approved and published to the marketplace.'
+                : 'Website submitted for review. It will appear in the marketplace after approval.');
     }
 
     private function publisherAccount(Request $request)

@@ -35,6 +35,27 @@ class AgencyServiceMarketplaceTest extends TestCase
         ]);
     }
 
+    public function test_agency_service_under_100_is_auto_approved(): void
+    {
+        [$agencyUser, $agencyAccount] = $this->userWithAccount('agency', 'Creative Agency');
+
+        $this->actingAs($agencyUser)->post(route('agency.services.store'), [
+            'title' => 'Quick SEO brief',
+            'category' => 'SEO Writing',
+            'description' => 'A compact SEO content brief for one target page.',
+            'deliverables' => 'Keyword angle and outline.',
+            'base_price' => '99.99',
+            'turnaround_days' => 2,
+        ])->assertRedirect(route('agency.services.index'));
+
+        $this->assertDatabaseHas('agency_services', [
+            'agency_account_id' => $agencyAccount->id,
+            'title' => 'Quick SEO brief',
+            'base_price_cents' => 9999,
+            'status' => 'approved',
+        ]);
+    }
+
     public function test_admin_can_approve_agency_service(): void
     {
         [$adminUser] = $this->userWithAccount('admin', 'MCV Admin');

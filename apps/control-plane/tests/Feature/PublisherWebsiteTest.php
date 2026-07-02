@@ -48,6 +48,31 @@ class PublisherWebsiteTest extends TestCase
         ]);
     }
 
+    public function test_guest_post_listing_under_100_is_auto_approved(): void
+    {
+        [$user, $account] = $this->publisherUser();
+
+        $this->actingAs($user)->post('/publisher/websites', [
+            'domain' => 'https://lowprice.example.com/write-for-us',
+            'name' => 'Low Price Publisher',
+            'niche' => 'Business',
+            'language' => 'en',
+            'country' => 'US',
+            'monthly_traffic' => 25000,
+            'domain_rating' => 32,
+            'domain_authority' => 28,
+            'guest_post_price' => '99.99',
+            'turnaround_days' => 3,
+        ])->assertRedirect('/publisher/websites');
+
+        $this->assertDatabaseHas('publisher_websites', [
+            'account_id' => $account->id,
+            'domain' => 'lowprice.example.com',
+            'guest_post_price_cents' => 9999,
+            'status' => 'approved',
+        ]);
+    }
+
     public function test_advertiser_cannot_access_publisher_inventory(): void
     {
         [$user] = $this->advertiserUser();
